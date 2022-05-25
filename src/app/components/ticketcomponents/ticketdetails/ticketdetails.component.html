@@ -1,0 +1,181 @@
+<div class = "my-container">
+  <div class = "col-md-8 my-form">
+    <form class = "form-horizontal">
+      <fieldset>
+
+        <!-- Form Name -->
+        <legend>Ticket details</legend>
+
+        <!-- Text input-->
+        <div class = "form-group">
+          <label class = "col-md-4 control-label" for = "title">Title</label>
+          <div class = "col-md-4">
+            <input id = "title" name = "title" type = "text" class = "form-control input-md"
+                   disabled = "disabled" value = "{{ticket.title}}">
+          </div>
+        </div>
+
+        <div class = "form-group">
+          <label class = "col-md-4 control-label" for = "storypoint">Storypoint</label>
+          <div class = "col-md-4">
+            <input id = "storypoint" name = "storypoint" type = "number"
+                   class = "form-control input-md" disabled = "disabled" value = "{{ticket.storyPoints}}">
+          </div>
+        </div>
+
+        <div class = "form-group">
+          <label class = "col-md-4 control-label" for = "description">Description</label>
+          <div class = "col-md-4">
+            <input id = "description" name = "description" type = "text"
+                   class = "form-control input-md" disabled = "disabled" value = "{{ticket.description}}">
+          </div>
+        </div>
+
+        <div class = "form-group">
+          <label class = "col-md-4 control-label" for = "status">Project</label>
+          <div class = "col-md-4">
+            <input id = "project" name = "project" type = "text"
+                   class = "form-control input-md" disabled = "disabled"
+                   value = "{{ticket.project == null?'':ticket.project.name}}">
+          </div>
+        </div>
+
+        <div class = "form-group">
+          <label class = "col-md-4 control-label" for = "assignee">Assignee</label>
+          <div class = "col-md-4">
+            <input id = "assignee" name = "assignee" type = "text"
+                   class = "form-control input-md" disabled = "disabled"
+                   value = "{{ticket.assignee == null? '':ticket.assignee.name}}">
+          </div>
+        </div>
+
+        <div class = "form-group">
+          <label class = "col-md-4 control-label" for = "status">Status</label>
+          <div class = "col-md-4">
+            <input id = "status" name = "status" type = "text"
+                   class = "form-control input-md" disabled = "disabled"
+                   value = "{{ticket.status}}">
+          </div>
+        </div>
+
+        <button id = "edit" name = "edit" class = "btn btn-primary "
+                color = "primary"
+                (click) = "edit()">Edit
+        </button>
+      </fieldset>
+    </form>
+    <br>
+    <br>
+    <br>
+    <div class = "my-form">
+      <mat-tab-group>
+        <mat-tab label = "Comments">
+          <br>
+          <div class = "col-md-4">
+            <button id = "setvisibleaddcomment" name = "setvisibleaddcomment" class = "btn btn-primary "
+                    color = "primary"
+                    (click) = "setvisibleaddcomment()">{{addcommentvisible ? 'Cancel' : 'Add comment'}}
+            </button>
+          </div>
+          <ng-container *ngIf = "addcommentvisible">
+            <h4>Add comment</h4>
+
+            <div class = "form-group">
+              <label class = "col-md-4 control-label" for = "description">Description</label>
+              <div class = "col-md-4">
+                <textarea #comment class = "form-control" id = "comment" name = "comment"></textarea>
+              </div>
+            </div>
+
+            <div class = "col-md-4">
+              <button id = "addcomment" name = "registration" class = "btn btn-primary" mat-flat-button
+                      color = "primary"
+                      (click) = "addcomment(comment.value)">Create
+              </button>
+            </div>
+          </ng-container>
+          <br>
+          <table mat-table [dataSource] = "comments">
+
+            <ng-container matColumnDef = "id">
+              <th mat-header-cell *matHeaderCellDef> No.</th>
+              <td mat-cell *matCellDef = "let comment"> {{comment.id}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef = "creator">
+              <th mat-header-cell *matHeaderCellDef> Creator</th>
+              <td mat-cell *matCellDef = "let comment"> {{comment.creator.name}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef = "createDateTime">
+              <th mat-header-cell *matHeaderCellDef> Creation time</th>
+              <td mat-cell *matCellDef = "let comment"> {{comment.createDateTime}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef = "commentMessage">
+              <th mat-header-cell *matHeaderCellDef> Message</th>
+              <td mat-cell *matCellDef = "let comment"> {{comment.commentMessage}} </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef = "displayedCommentColumns"></tr>
+            <tr mat-row *matRowDef = "let row; columns: displayedCommentColumns;"></tr>
+          </table>
+        </mat-tab>
+        <mat-tab label = "Logged hours">
+          <br>
+          <div class = "col-md-4">
+            <button id = "setvisibleaddhour" name = "setvisibleaddhour" class = "btn btn-primary" mat-flat-button
+                    color = "primary"
+                    (click) = "setvisibleaddhour()">{{ addhourvisible ? 'Cancel' : 'Log time'}}
+            </button>
+          </div>
+
+          <ng-container *ngIf = "addhourvisible">
+            <form>
+              <div class = "form-group">
+                <br>
+                <label class = "col-md-4 control-label" for = "logDate">Date to log:</label>
+                <br>
+                <input [(ngModel)] = "logDate" class = " col-md-4 form-control input-md" type = "date" id = "logDate"
+                       name = "logDate">
+
+                <br>
+                <label class = "col-md-4 control-label" for = "storypoint">Hours to log</label>
+                <div class = "col-md-4">
+                  <input #hours [(ngModel)] = "loghours" id = "hours" name = "hours" type = "number" placeholder = ""
+                         class = "form-control input-md"
+                         required = "">
+                </div>
+              </div>
+              <button id = "loghour" name = "loghour" class = "btn btn-primary" mat-flat-button
+                      color = "primary"
+                      (click) = "loghurs()">Log hours
+              </button>
+            </form>
+          </ng-container>
+          <br>
+          <table mat-table [dataSource] = "loggedhours">
+
+            <ng-container matColumnDef = "user">
+              <th mat-header-cell *matHeaderCellDef> Creator</th>
+              <td mat-cell *matCellDef = "let hour"> {{hour.user.name}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef = "toDate">
+              <th mat-header-cell *matHeaderCellDef> Date</th>
+              <td mat-cell *matCellDef = "let hour"> {{hour.toDate}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef = "recordedhours">
+              <th mat-header-cell *matHeaderCellDef> Logged time</th>
+              <td mat-cell *matCellDef = "let hour"> {{hour.recordedhours}}h</td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef = "displayedHoursColumns"></tr>
+            <tr mat-row *matRowDef = "let row; columns: displayedHoursColumns;"></tr>
+          </table>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  </div>
+</div>

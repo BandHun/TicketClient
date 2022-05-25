@@ -1,0 +1,53 @@
+<h1>Edit team</h1>
+<form class = "form-horizontal">
+  <fieldset>
+
+    <!-- Form Name -->
+    <legend>Change team name</legend>
+
+    <!-- Text input-->
+    <div class = "form-group">
+      <label class = "col-md-4 control-label" for = "name">Team Name</label>
+      <div class = "col-md-4">
+        <input #name id = "name" name = "name" type = "text" placeholder = "" class = "form-control input-md"
+               required = "" value = "{{team.name}}">
+      </div>
+    </div>
+
+    <div class = "form-group">
+      <label class = "col-md-4 control-label" for = "registration"></label>
+      <div class = "col-md-4">
+        <button id = "registration" name = "registration" class = "btn btn-primary" mat-flat-button color = "primary"
+                (click) = "changename(name.value)">Change name
+        </button>
+      </div>
+    </div>
+  </fieldset>
+</form>
+<br>
+<h2> Users in the team</h2>
+
+<div class = "mat-elevation-z8">
+  <table mat-table [dataSource] = "dataSource">
+
+    <ng-container matColumnDef = "id">
+      <th mat-header-cell *matHeaderCellDef> No.</th>
+      <td mat-cell *matCellDef = "let user"> {{user.id}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef = "name">
+      <th mat-header-cell *matHeaderCellDef> Name</th>
+      <td mat-cell *matCellDef = "let user"> {{user.name}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef = "actions">
+      <th mat-header-cell *matHeaderCellDef> Actions</th>
+      <mat-cell *matCellDef = "let user">
+        <button mat-button (click) = "kickFromTeam(user)">Kick from Team</button>
+      </mat-cell>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef = "displayedColumns"></tr>
+    <tr mat-row *matRowDef = "let row; columns: displayedColumns;"></tr>
+  </table>
+</div>

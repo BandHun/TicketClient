@@ -1,0 +1,49 @@
+<div class = "container my-container">
+  <div class = "col-lg-12 my-form">
+    <h1>Register or choose company</h1>
+    <form class = "form-horizontal">
+      <fieldset>
+
+        <!-- Form Name -->
+        <legend>Company registration</legend>
+
+        <!-- Text input-->
+        <div class = "form-group">
+          <label class = "col-md-4 control-label" for = "name">Company Name</label>
+          <div>
+            <input #name id = "name" name = "name" type = "text" placeholder = "" class = "form-control input-md"
+                   required>
+          </div>
+        </div>
+
+        <div class = "form-group">
+          <label class = "col-md-4 control-label" for = "registration"></label>
+          <div class = "col-md-4">
+            <button id = "registration" name = "registration" class = "btn btn-primary" mat-flat-button
+                    color = "primary"
+                    (click) = "registerCompany(name.value)">Company registration
+            </button>
+          </div>
+        </div>
+      </fieldset>
+      <br>
+      <br>
+      <br>
+      <h4>Choose your company</h4>
+      <select [(ngModel)] = "companyi" id = "companyi" name = "companyi" class = "form-control">
+        <option *ngFor = "let company of companies" [ngValue] = "company">
+          {{ company.name }}
+        </option>
+      </select>
+      <div class = "form-group">
+        <label class = "col-md-4 control-label" for = "registration"></label>
+        <div class = "col-md-4">
+          <button id = "choosecompany" name = "choosecompany" class = "btn btn-primary" mat-flat-button
+                  color = "primary"
+                  (click) = "chooseCompany()">Choose Company
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

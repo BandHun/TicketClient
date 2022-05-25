@@ -1,0 +1,11 @@
+<div class = "container my-container">
+  <div class = "col-lg-12 my-form">
+    <h1>Profile</h1>
+
+    <h3>ID: {{user.id}}</h3>
+    <h3>Name: {{user.name}}</h3>
+    <h3>Email: {{user.emailaddress}}</h3>
+    <h3>Company: {{user.company == null ? '' : user.company.name}}</h3>
+    <h3>Team: {{user.teams == null ? '' : user.teams.name}}</h3>
+  </div>
+</div>

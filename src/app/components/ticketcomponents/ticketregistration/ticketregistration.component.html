@@ -1,0 +1,66 @@
+<div class = "container my-container">
+  <div class = "col-lg-12 my-form">
+
+    <!-- Form Name -->
+    <legend>Create ticket</legend>
+
+    <!-- Title-->
+    <div class = "form-group">
+      <label class = "col-md-8 control-label" for = "title">Title</label>
+      <div class = "col-md-8">
+        <input #title id = "title" name = "title" type = "text" placeholder = "" class = "form-control input-md"
+               required = "">
+      </div>
+    </div>
+
+    <!-- Storypoint-->
+    <div class = "form-group">
+      <label class = "col-md-8 control-label" for = "storypoint">Story points</label>
+      <div class = "col-md-8">
+        <input #storypoint id = "storypoint" name = "storypoint" type = "number" placeholder = ""
+               class = "form-control input-md">
+
+      </div>
+    </div>
+
+    <!-- Description -->
+    <div class = "form-group">
+      <label class = "col-md-8 control-label" for = "description">Description</label>
+      <div class = "col-md-8">
+        <textarea #description class = "form-control" id = "description" name = "description"></textarea>
+      </div>
+    </div>
+
+    <!-- Project -->
+    <div class = "form-group">
+      <label class = "col-md-8 control-label" for = "assignee">Select Project</label>
+      <div class = "col-md-8">
+        <select [(ngModel)] = "project" id = "project">
+          <option *ngFor = "let project of projects" [ngValue] = "project">
+            {{project.name}}
+          </option>
+        </select>
+      </div>
+
+      <!-- Assignee -->
+      <div class = "form-group">
+        <label class = "col-md-8 control-label" for = "assignee">Select Assignee</label>
+        <div class = "col-md-8">
+          <select [(ngModel)] = "assignee" id = "assignee">
+            <option *ngFor = "let user of users" [ngValue] = "user">
+              {{user.name}}
+            </option>
+          </select>
+        </div>
+
+        <label class = "col-md-8 control-label" for = "registration"></label>
+        <div class = "col-md-8">
+          <button id = "registration" name = "registration" class = "btn btn-primary" mat-flat-button
+                  color = "primary"
+                  (click) = "onSubmit(title.value, storypoint.value,description.value )">Create
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,56 @@
+<div class = "my-container">
+  <div class = "col-lg-12 my-form">
+    <h1>Tickets</h1>
+    <div class = "mat-elevation-z8">
+      <table mat-table [dataSource] = "dataSource">
+
+        <ng-container matColumnDef = "id">
+          <th mat-header-cell *matHeaderCellDef> No.</th>
+          <td mat-cell *matCellDef = "let ticket"> {{ticket.id}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef = "title">
+          <th mat-header-cell *matHeaderCellDef> Title</th>
+          <td mat-cell *matCellDef = "let ticket"> {{ticket.title}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef = "project">
+          <th mat-header-cell *matHeaderCellDef> Project</th>
+          <td mat-cell *matCellDef = "let ticket"> {{ticket.project == null ? '' : ticket.project.name}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef = "author">
+          <th mat-header-cell *matHeaderCellDef> Author</th>
+          <td mat-cell *matCellDef = "let ticket"> {{ticket.author.name}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef = "assignee">
+          <th mat-header-cell *matHeaderCellDef> Assignee</th>
+          <td mat-cell *matCellDef = "let ticket">{{ticket.assignee == null ? '' : ticket.assignee.name}}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef = "creation">
+          <th mat-header-cell *matHeaderCellDef> Creation</th>
+          <td mat-cell *matCellDef = "let ticket"> {{ticket.createdAt}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef = "status">
+          <th mat-header-cell *matHeaderCellDef> Status</th>
+          <td mat-cell *matCellDef = "let ticket"> {{ticket.status}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef = "actions">
+          <th mat-header-cell *matHeaderCellDef> Actions</th>
+          <mat-cell *matCellDef = "let ticket">
+            <button mat-button (click) = "editTicket(ticket)">Details</button>
+            <button mat-button (click) = "deleteTicket(ticket.id)">Delete</button>
+          </mat-cell>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef = "displayedColumns"></tr>
+        <tr mat-row *matRowDef = "let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+  </div>
+</div>
