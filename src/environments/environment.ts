@@ -4,9 +4,7 @@
 
 export const environment = {
   production : false,
-  apiBaseUrl : 'http://10.42.0.216:8080',
-  username : "asdf@asdf.asdf",
-  password : "asdf"
+  apiBaseUrl : 'http://localhost:8080'
 };
 
 /*
