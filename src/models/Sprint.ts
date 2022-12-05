@@ -1,9 +1,12 @@
-import { Ticket } from "./Ticket";
+import {Ticket} from "./Ticket";
 
-export interface Sprint {
+export class Sprint {
   id: number;
   isValid: boolean;
   startDate: Date;
   endDate: Date;
   tickets: Array<Ticket>;
+
+  constructor() {
+  }
 }

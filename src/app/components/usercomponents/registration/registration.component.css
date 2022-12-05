@@ -9,6 +9,10 @@
   width: 60%;
 }
 
+.redflag {
+  color: red;
+}
+
 .my-form {
   padding: 5%;
   background: #0062cc;

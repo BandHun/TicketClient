@@ -1,10 +1,10 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { environment } from "../../../environments/environment";
-import { Project } from "../../../models/Project";
+import {Injectable} from '@angular/core';
+import {HttpClient} from "@angular/common/http";
+import {environment} from "../../../environments/environment";
+import {Project} from "../../../models/Project";
 
 @Injectable({
-  providedIn : 'root'
+  providedIn: 'root'
 })
 export class ProjectsService {
 
@@ -12,17 +12,14 @@ export class ProjectsService {
   }
 
   public createProject(name: string) {
-    const headers = new HttpHeaders({ Authorization : 'Basic ' + btoa(localStorage.getItem('username') + ":" + localStorage.getItem('password')) });
-    return this.http.post<Project>(environment.apiBaseUrl + "/project/add", name, { headers });
+    return this.http.post<Project>(environment.apiBaseUrl + "/project/add", name);
   }
 
   public getAllProjects() {
-    const headers = new HttpHeaders({ Authorization : 'Basic ' + btoa(localStorage.getItem('username') + ":" + localStorage.getItem('password')) });
-    return this.http.get<Array<Project>>(environment.apiBaseUrl + "/project/all", { headers });
+    return this.http.get<Array<Project>>(environment.apiBaseUrl + "/project/all");
   }
 
   public deleteProject(projectId: number) {
-    const headers = new HttpHeaders({ Authorization : 'Basic ' + btoa(localStorage.getItem('username') + ":" + localStorage.getItem('password')) });
-    return this.http.delete<Array<Project>>(environment.apiBaseUrl + "/project/delete/" + projectId, { headers });
+    return this.http.delete<Array<Project>>(environment.apiBaseUrl + "/project/delete/" + projectId);
   }
 }

@@ -1,10 +1,10 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { environment } from "../../../environments/environment";
-import { HourRecords } from "../../../models/HourRecords";
+import {Injectable} from '@angular/core';
+import {HttpClient} from "@angular/common/http";
+import {environment} from "../../../environments/environment";
+import {HourRecords} from "../../../models/HourRecords";
 
 @Injectable({
-  providedIn : 'root'
+  providedIn: 'root'
 })
 export class HourrecordService {
 
@@ -12,27 +12,21 @@ export class HourrecordService {
   }
 
   public getRecordsForTicket(ticketId: number) {
-    const headers = new HttpHeaders({ Authorization : 'Basic ' + btoa(localStorage.getItem('username') + ":" + localStorage.getItem('password')) });
-    return this.http.get<Array<HourRecords>>(environment.apiBaseUrl + "/hours/getforticket/" + ticketId, {
-      headers
-    });
+    return this.http.get<Array<HourRecords>>(environment.apiBaseUrl + "/hours/getforticket/" + ticketId
+    );
   }
 
   public getRecordsForUser(userId: number) {
-    const headers = new HttpHeaders({ Authorization : 'Basic ' + btoa(localStorage.getItem('username') + ":" + localStorage.getItem('password')) });
-    return this.http.get<number>(environment.apiBaseUrl + "/hours/getforuser/" + userId, {
-      headers
-    });
+    return this.http.get<number>(environment.apiBaseUrl + "/hours/getforuser/" + userId
+    );
   }
 
   public createHourRecord(ticketId: number, toDate: Date, hours: number) {
-    const headers = new HttpHeaders({ Authorization : 'Basic ' + btoa(localStorage.getItem('username') + ":" + localStorage.getItem('password')) });
     return this.http.post<HourRecords>(environment.apiBaseUrl + "/hours/loghour", {
-      ticketId : ticketId,
-      toDate : toDate,
-      hours : hours
-    }, {
-      headers
-    });
+        ticketId: ticketId,
+        toDate: toDate,
+        hours: hours
+      }
+    );
   }
 }

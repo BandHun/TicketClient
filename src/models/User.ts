@@ -1,5 +1,12 @@
-import { Company } from "./Company";
-import { Teams } from "./Teams";
+import {Company} from "./Company";
+import {Teams} from "./Teams";
+
+export enum UserLevel {
+  ADMIN = 'ADMIN',
+  DEVELOPER = 'DEVELOPER',
+  CUSTOMER = 'CUSTOMER',
+  UNKNOWN = 'UNKNOWN',
+}
 
 export interface User {
   id: number;
@@ -8,4 +15,5 @@ export interface User {
   password: string;
   company: Company;
   teams: Teams;
+  userlevel: UserLevel;
 }

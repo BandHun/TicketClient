@@ -8,8 +8,8 @@
     <div class = "form-group">
       <label class = "col-md-8 control-label" for = "title">Title</label>
       <div class = "col-md-8">
-        <input #title id = "title" name = "title" type = "text" placeholder = "" class = "form-control input-md"
-               required = "">
+        <input [(ngModel)] = "ticket.title" id = "title" name = "title" type = "text" placeholder = ""
+               class = "form-control input-md" required>
       </div>
     </div>
 
@@ -17,7 +17,7 @@
     <div class = "form-group">
       <label class = "col-md-8 control-label" for = "storypoint">Story points</label>
       <div class = "col-md-8">
-        <input #storypoint id = "storypoint" name = "storypoint" type = "number" placeholder = ""
+        <input [(ngModel)] = "ticket.storyPoints" id = "storypoint" name = "storypoint" type = "number" placeholder = ""
                class = "form-control input-md">
 
       </div>
@@ -35,29 +35,52 @@
     <div class = "form-group">
       <label class = "col-md-8 control-label" for = "assignee">Select Project</label>
       <div class = "col-md-8">
-        <select [(ngModel)] = "project" id = "project">
+        <select [(ngModel)] = "ticket.project" id = "project" class = "form-control">
           <option *ngFor = "let project of projects" [ngValue] = "project">
             {{project.name}}
           </option>
         </select>
       </div>
 
-      <!-- Assignee -->
+      <!-- Team -->
       <div class = "form-group">
-        <label class = "col-md-8 control-label" for = "assignee">Select Assignee</label>
+        <label class = "col-md-8 control-label" for = "assignee">Select Team</label>
         <div class = "col-md-8">
-          <select [(ngModel)] = "assignee" id = "assignee">
-            <option *ngFor = "let user of users" [ngValue] = "user">
-              {{user.name}}
+          <select [(ngModel)] = "ticket.team" id = "team" class = "form-control" (change) = "teamchanged()">
+            <option *ngFor = "let team of teams" [ngValue] = "team">
+              {{team.name}}
             </option>
           </select>
         </div>
 
+        <!-- Sprint -->
+        <div class = "form-group" *ngIf = "teamnotnull">
+          <label class = "col-md-8 control-label" for = "assignee">Select Sprint</label>
+          <div class = "col-md-8">
+            <select [(ngModel)] = "ticket.sprint" id = "sprint" class = "form-control">
+              <option *ngFor = "let sprint of sprints" [ngValue] = "sprint">
+                {{sprint.startDate}} - {{sprint.endDate}}
+              </option>
+            </select>
+          </div>
+
+          <!-- Assignee -->
+          <div class = "form-group" *ngIf = "teamnotnull">
+            <label class = "col-md-8 control-label" for = "assignee">Select Assignee</label>
+            <div class = "col-md-8">
+              <select [(ngModel)] = "ticket.assignee" id = "assignee" class = "form-control">
+                <option *ngFor = "let user of users" [ngValue] = "user">
+                  {{user.name}}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+
         <label class = "col-md-8 control-label" for = "registration"></label>
         <div class = "col-md-8">
-          <button id = "registration" name = "registration" class = "btn btn-primary" mat-flat-button
-                  color = "primary"
-                  (click) = "onSubmit(title.value, storypoint.value,description.value )">Create
+          <button id = "registration" name = "registration" class = "btn btn-primary" mat-flat-button color = "primary"
+                  (click) = "onSubmit()">Create
           </button>
         </div>
       </div>

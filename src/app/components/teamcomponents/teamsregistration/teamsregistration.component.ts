@@ -1,19 +1,25 @@
-import { Component, OnInit } from '@angular/core';
-import { MatTableDataSource } from "@angular/material/table";
-import { Teams } from "../../../../models/Teams";
-import { TeamsService } from 'src/app/services/teams/teams.service';
-import { Router } from "@angular/router";
+import {Component, OnInit} from '@angular/core';
+import {MatTableDataSource} from "@angular/material/table";
+import {Teams} from "../../../../models/Teams";
+import {TeamsService} from 'src/app/services/teams/teams.service';
+import {Router} from "@angular/router";
+import {TeamstableService} from "../../../services/teamtable/teamstable.service";
 
 @Component({
-  selector : 'app-teamsregistration',
-  templateUrl : './teamsregistration.component.html',
-  styleUrls : ['./teamsregistration.component.css']
+  selector: 'app-teamsregistration',
+  templateUrl: './teamsregistration.component.html',
+  styleUrls: ['./teamsregistration.component.css']
 })
 export class TeamsregistrationComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'name', 'actions'];
+  displayedColumns: string[] = ['name', 'actions'];
   dataSource = new MatTableDataSource<Teams>();
+  registration = false;
 
-  constructor(private teamsService: TeamsService, private router: Router) {
+  constructor(private teamsService: TeamsService, private tableService: TeamstableService, private router: Router) {
+  }
+
+  setvisibleaddteam() {
+    this.registration = !this.registration;
   }
 
   ngOnInit(): void {
@@ -24,18 +30,22 @@ export class TeamsregistrationComponent implements OnInit {
   }
 
   registerTeam(name: string): void {
-    this.teamsService.createTeam(name).subscribe(user => this.router.navigate(['home']));
-  }
-
-  editTeam(team: Teams): void {
-    this.router.navigate(['teamsedit/' + team.id, { team : JSON.stringify(team) }]);
-  }
-
-  joinTema(id: number): void {
-    this.teamsService.joinTeam(id).subscribe(user => {
-      localStorage.setItem('userId', user.id + "");
-      this.router.navigate(['home']);
+    this.teamsService.createTeam(name).subscribe(team => {
+      this.dataSource.data.push(team);
+      this.dataSource._updateChangeSubscription();
     });
+  }
+
+  createTable(teamId: number) {
+    this.tableService.createTable(teamId);
+  }
+
+  joinTema(teamId: number) {
+    this.teamsService.joinTeam(teamId).subscribe();
+  }
+
+  hasNotTable(team: Teams) {
+    console.log(team.teamsTable)
   }
 }
 

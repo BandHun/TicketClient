@@ -1,77 +1,61 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { environment } from "../../../environments/environment";
-import { Ticket } from "../../../models/Ticket";
+import {Injectable} from '@angular/core';
+import {HttpClient} from "@angular/common/http";
+import {environment} from "../../../environments/environment";
+import {Ticket} from "../../../models/Ticket";
+import {Sprint} from 'src/models/Sprint';
 
 @Injectable({
-  providedIn : 'root'
+  providedIn: 'root'
 })
 export class TicketService {
 
   constructor(private http: HttpClient) {
   }
 
-  public createTicket(title: string, storypoint: string, description: string) {
-    const headers = new HttpHeaders({ Authorization : 'Basic ' + btoa(localStorage.getItem('username') + ":" + localStorage.getItem('password')) });
-
-    return this.http.post<Ticket>(environment.apiBaseUrl + "/ticket/add", {
-      title : title,
-      storypoint : storypoint,
-      description : description
-    }, {
-      headers
-    });
+  public createTicket(ticket: Ticket) {
+    return this.http.post<Ticket>(environment.apiBaseUrl + "/ticket/add", ticket);
   }
 
   public save(ticket: Ticket) {
     console.log(ticket);
-    const headers = new HttpHeaders({ Authorization : 'Basic ' + btoa(localStorage.getItem('username') + ":" + localStorage.getItem('password')) });
-    return this.http.put<Ticket>(environment.apiBaseUrl + "/ticket/update", ticket, {
-      headers
-    });
+    return this.http.put<Ticket>(environment.apiBaseUrl + "/ticket/update", ticket);
+  }
+
+  public addToSprint(ticketId: number, sprint: Sprint) {
+    return this.http.post<Ticket>(environment.apiBaseUrl + "/ticket/tosprint/" + ticketId, sprint);
   }
 
 
   public assigneto(assignee: number, ticketid: number) {
-    const headers = new HttpHeaders({ Authorization : 'Basic ' + btoa(localStorage.getItem('username') + ":" + localStorage.getItem('password')) });
-    return this.http.put<Ticket>(environment.apiBaseUrl + "/ticket/assigneto/" + ticketid, assignee, {
-      headers
-    });
+    return this.http.put<Ticket>(environment.apiBaseUrl + "/ticket/assigneto/" + ticketid, assignee);
   }
 
   public addToProject(projectId: number, ticketid: number) {
-    const headers = new HttpHeaders({ Authorization : 'Basic ' + btoa(localStorage.getItem('username') + ":" + localStorage.getItem('password')) });
-    return this.http.put<Ticket>(environment.apiBaseUrl + "/ticket/addtoproject/" + ticketid, projectId, {
-      headers
-    });
+    return this.http.put<Ticket>(environment.apiBaseUrl + "/ticket/addtoproject/" + ticketid, projectId);
   }
 
   public getTicketsById(Id: number) {
-    const headers = new HttpHeaders({ Authorization : 'Basic ' + btoa(localStorage.getItem('username') + ":" + localStorage.getItem('password')) });
-    return this.http.get<Ticket>(environment.apiBaseUrl + "/ticket/" + Id, {
-      headers
-    });
+    return this.http.get<Ticket>(environment.apiBaseUrl + "/ticket/" + Id);
   }
 
   public getTicketsByCompany() {
-    const headers = new HttpHeaders({ Authorization : 'Basic ' + btoa(localStorage.getItem('username') + ":" + localStorage.getItem('password')) });
-    return this.http.get<Array<Ticket>>(environment.apiBaseUrl + "/ticket/allbycompany", {
-      headers
-    });
+    return this.http.get<Array<Ticket>>(environment.apiBaseUrl + "/ticket/allbycompany");
   }
 
 
   public deleteTicket(ticketId: number) {
-    const headers = new HttpHeaders({ Authorization : 'Basic ' + btoa(localStorage.getItem('username') + ":" + localStorage.getItem('password')) });
-    return this.http.delete<any>(environment.apiBaseUrl + "/ticket/delete/" + ticketId, {
-      headers
-    });
+    return this.http.delete<any>(environment.apiBaseUrl + "/ticket/delete/" + ticketId);
   }
 
   public addComment(ticketId: number, message: string) {
-    const headers = new HttpHeaders({ Authorization : 'Basic ' + btoa(localStorage.getItem('username') + ":" + localStorage.getItem('password')) });
-    return this.http.post<any>(environment.apiBaseUrl + "/comment/add/" + ticketId, message, {
-      headers
-    });
+    return this.http.post<any>(environment.apiBaseUrl + "/comment/add/" + ticketId, message);
+  }
+
+  public updateComment(comment: Comment) {
+    return this.http.post<any>(environment.apiBaseUrl + "/comment/update", comment);
+  }
+
+  public deleteComment(commentId: number) {
+    return this.http.delete<any>(environment.apiBaseUrl + "/comment/add/" + commentId);
   }
 }

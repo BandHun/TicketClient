@@ -1,15 +1,18 @@
-<mat-toolbar class = "navbar-class">
-  <span>Ticket Service</span>
+<mat-sidenav-container class = "full-height" autosize = "true">
+  <mat-sidenav *ngIf = "showHeader" class = "navbar-class" mode = "side" opened (click) = "hideSidebar()">
 
-  <div class = "spacer"></div>
-
-  <a mat-button class = "navbar-class" href = "home">Home</a>
-  <a mat-button class = "navbar-class" href = "login">Login</a>
-  <a mat-button class = "navbar-class" href = "registration">Registration</a>
-  <a mat-button class = "navbar-class" href = "createticket">Create Ticket</a>
-  <a mat-button class = "navbar-class" href = "teamsregistration">Teams</a>
-  <a mat-button class = "navbar-class" href = "tickets">Tickets</a>
-  <a mat-button class = "navbar-class" href = "projects">Projects</a>
-  <a mat-button class = "navbar-class" href = "profile">Profile</a>
-  <a mat-raised-button color = "accent" (click) = "doLogout()">Logout</a>
-</mat-toolbar>
+    <div *ngFor = "let i of routeList">
+      <div *ngIf = "foradmin(i.admin)">
+        <mat-menu-item [routerLink] = "['/'+ i.route]"
+                       class = "with-icon padded glow-on-hover"
+                       (click) = "$event.stopPropagation()">
+          <mat-icon [matTooltip] = "i.toolTip">{{ i.icon }}</mat-icon>&nbsp;
+          <span [hidden] = "collapse">{{ i.name }}</span>
+        </mat-menu-item>
+      </div>
+    </div>
+  </mat-sidenav>
+  <mat-sidenav-content class = "padded">
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

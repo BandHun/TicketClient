@@ -1,7 +1,8 @@
-import { User } from "./User";
-import { Sprint } from "./Sprint";
-import { Project } from "./Project";
-import { Company } from "./Company";
+import {User} from "./User";
+import {Sprint} from "./Sprint";
+import {Project} from "./Project";
+import {Company} from "./Company";
+import {Teams} from "./Teams";
 
 export enum TicketStatus {
   TODO = 'TODO',
@@ -13,7 +14,7 @@ export enum TicketStatus {
 }
 
 
-export interface Ticket {
+export class Ticket {
   id: number;
   isValid: boolean;
   title: string;
@@ -29,4 +30,9 @@ export interface Ticket {
   documents: Array<Document>;
   comments: Array<Comment>;
   sprint: Sprint;
+  team: Teams;
+
+  constructor(title: string, author: User, assignee: User, project: Project, description: string, storyPoints: number,
+              status: TicketStatus, sprint: Sprint) {
+  }
 }

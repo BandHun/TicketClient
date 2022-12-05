@@ -1,0 +1,48 @@
+<div class = "container my-container">
+  <div class = "col-lg-12 my-form">
+    <h1>Edit User</h1>
+    <form>
+
+
+      <!-- Name -->
+      <div class = "form-group">
+        <label class = "col-md-8 control-label" for = "name">Name</label>
+        <div class = "col-md-8">
+          <input [(ngModel)] = "user.name" id = "name" name = "name" type = "text" placeholder = ""
+                 class = "form-control input-md" required = "" value = "{{user.name}}">
+        </div>
+      </div>
+
+      <!-- Email -->
+      <div class = "form-group">
+        <label class = "col-md-8 control-label" for = "emailaddress">Email address</label>
+        <div class = "col-md-8">
+          <input [(ngModel)] = "user.emailaddress" id = "emailaddress" name = "emailaddress" type = "text"
+                 placeholder = "" class = "form-control input-md" required = "" value = "{{user.emailaddress}}">
+        </div>
+      </div>
+
+      <!-- Company -->
+      <h3>Company: {{user.company == null ? '' : user.company.name}}</h3>
+      <button id = "registration" name = "registration" class = "btn btn-danger" mat-flat-button
+              (click) = "leaveCompany()">Leave Company
+      </button>
+
+      <!-- Team -->
+      <div class = "form-group">
+        <label class = "col-md-8 control-label" for = "teams">Team</label>
+        <div class = "col-md-8">
+          <select [(ngModel)] = "user.teams" id = "teams" class = "form-control">
+            <option *ngFor = "let team of teams" [ngValue] = "team" selected = "{{user.teams == team?'selected':''}}">
+              {{team.name}}
+            </option>
+          </select>
+        </div>
+      </div>
+      <button type = "submit" name = "registration" class = "btn btn-primary" mat-flat-button color = "primary"
+              (click) = "save()">
+        Save changes
+      </button>
+    </form>
+  </div>
+</div>

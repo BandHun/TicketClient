@@ -10,8 +10,7 @@
           <label class = "col-md-8 control-label" for = "title">Title</label>
           <div class = "col-md-8">
             <input [(ngModel)] = "ticket.title" id = "title" name = "title" type = "text" placeholder = ""
-                   class = "form-control input-md"
-                   required = "" value = "{{ticket.title}}">
+                   class = "form-control input-md" required = "" value = "{{ticket.title}}">
           </div>
         </div>
 
@@ -19,9 +18,7 @@
           <label class = "col-md-8 control-label" for = "storypoint">Storypoint</label>
           <div class = "col-md-8">
             <input [(ngModel)] = "ticket.storyPoints" id = "storypoint" name = "storypoint" type = "number"
-                   placeholder = ""
-                   class = "form-control input-md"
-                   required = "" value = "{{ticket.storyPoints}}">
+                   placeholder = "" class = "form-control input-md" required = "" value = "{{ticket.storyPoints}}">
           </div>
         </div>
 
@@ -29,55 +26,84 @@
           <label class = "col-md-8 control-label" for = "description">Description</label>
           <div class = "col-md-8">
             <input [(ngModel)] = "ticket.description" id = "description" name = "description" type = "text"
-                   placeholder = ""
-                   class = "form-control input-md"
-                   required = "" value = "{{ticket.description}}">
+                   placeholder = "" class = "form-control input-md" required = "" value = "{{ticket.description}}">
           </div>
         </div>
 
         <!-- project -->
         <div class = "form-group">
-          <label class = "col-md-8 control-label" for = "assignee">Select Project</label>
+          <label class = "col-md-8 control-label" for = "assignee">Project</label>
           <div class = "col-md-8">
             <select [(ngModel)] = "ticket.project" id = "project" name = "project" class = "form-control">
               <option *ngFor = "let project of projects" [ngValue] = "project"
-                      [selected] = "myequal(ticket.project, project)">
+                      selected = "{{ticket.project.id == project.id?'selected':''}}">
                 {{ project.name }}
               </option>
             </select>
           </div>
         </div>
 
-        <!-- Assignee -->
+        <!-- Team -->
         <div class = "form-group">
-          <label class = "col-md-8 control-label" for = "assignee">Select Assignee</label>
+          <label class = "col-md-8 control-label" for = "assignee">Team</label>
           <div class = "col-md-8">
-            <select [(ngModel)] = "ticket.assignee" id = "assignee" name = "assignee" class = "form-control">
-              <option *ngFor = "let user of users" [ngValue] = "user"
-                      [selected] = "myequal(user,ticket.assignee)">
-                {{ user.name }}
+            <select [(ngModel)] = "team" id = "team" class = "form-control" (change) = "teamchanged(team)">
+              <option *ngFor = "let team of teams" [ngValue] = "team"
+                      selected = "{{ticket.team == team?'selected':''}}">
+                {{team.name}}
               </option>
             </select>
           </div>
-        </div>
 
-        <!-- Select Basic -->
-        <div class = "form-group">
-          <label class = "col-md-8 control-label" for = "selectbasic">Select Basic</label>
-          <div class = "col-md-8">
-            <select [(ngModel)] = "ticket.status" id = "selectbasic" name = "selectbasic" class = "form-control">
-              <option *ngFor = "let status of statuses" [ngValue] = "status"
-                      selected = "{{ticket.status == status?'selected':''}}">
-                {{ status }}
-              </option>
-            </select>
+          <!-- Sprint -->
+          <div class = "form-group">
+            <label class = "col-md-8 control-label" for = "assignee">Sprint</label>
+            <div class = "col-md-8">
+              <select [(ngModel)] = "ticket.sprint" id = "sprint" class = "form-control">
+                <option *ngFor = "let sprint of sprints" [ngValue] = "sprint"
+                        selected = "{{ticket.sprint.id == sprint.id?'selected':''}}">
+                  {{sprint.startDate}} - {{sprint.endDate}}
+                </option>
+              </select>
+            </div>
+
+            <!-- Assignee -->
+            <div class = "form-group">
+              <label class = "col-md-8 control-label" for = "assignee">Assignee</label>
+              <div class = "col-md-8">
+                <select [(ngModel)] = "ticket.assignee" id = "assignee" class = "form-control">
+                  <option *ngFor = "let user of users" [ngValue] = "user"
+                          selected = "{{ticket.assignee.id === user.id?'selected':''}}">
+                    {{user.name}}
+                  </option>
+                </select>
+              </div>
+            </div>
           </div>
-        </div>
 
-        <div class = "col-md-4">
-          <button id = "registration" name = "registration" class = "btn btn-primary" mat-flat-button color = "primary"
-                  (click) = "save()">Save
-          </button>
+          <!-- Select Status -->
+          <div class = "form-group">
+            <label class = "col-md-8 control-label" for = "selectbasic">Status</label>
+            <div class = "col-md-8">
+              <select [(ngModel)] = "ticket.status" id = "selectbasic" name = "selectbasic" class = "form-control">
+                <option *ngFor = "let status of statuses" [ngValue] = "status"
+                        selected = "{{ticket.status == status?'selected':''}}">
+                  {{ status }}
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <label for = "profileImage">Upload Image</label>
+          <input id = "profileImage" formControlName = "profileImage" class = "form-control" type = "file"
+                 (change) = "selectFile($event)">
+
+
+          <div class = "col-md-4">
+            <button id = "registration" name = "registration" class = "btn btn-primary" mat-flat-button
+                    color = "primary" (click) = "save()">Save
+            </button>
+          </div>
         </div>
       </fieldset>
     </form>

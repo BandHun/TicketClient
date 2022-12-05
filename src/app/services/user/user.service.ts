@@ -1,43 +1,49 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { environment } from "../../../environments/environment";
-import { User } from "../../../models/User";
+import {Injectable} from '@angular/core';
+import {HttpClient} from "@angular/common/http";
+import {environment} from "../../../environments/environment";
+import {User} from "../../../models/User";
 
 @Injectable({
-  providedIn : 'root'
+  providedIn: 'root'
 })
 export class UserService {
 
   constructor(private http: HttpClient) {
   }
 
-  chooseCompany(companyId: number) {
-    const headers = new HttpHeaders({ Authorization : 'Basic ' + btoa(localStorage.getItem('username') + ":" + localStorage.getItem('password')) });
-    return this.http.put<User>(environment.apiBaseUrl + "/user/addcompany", companyId, { headers });
+  sendForgetPassword(email: string) {
+    return this.http.post<User>(environment.apiBaseUrl + "/public/forgetpassword", email);
   }
 
   getById(userId: number) {
-    const headers = new HttpHeaders({ Authorization : 'Basic ' + btoa(localStorage.getItem('username') + ":" + localStorage.getItem('password')) });
-    return this.http.get<User>(environment.apiBaseUrl + "/user/" + userId, { headers });
+    return this.http.get<User>(environment.apiBaseUrl + "/user/" + userId);
   }
 
   getByTeam(teamId: number) {
-    const headers = new HttpHeaders({ Authorization : 'Basic ' + btoa(localStorage.getItem('username') + ":" + localStorage.getItem('password')) });
-    return this.http.get<Array<User>>(environment.apiBaseUrl + "/user/getbyteam/" + teamId, { headers });
+    return this.http.get<Array<User>>(environment.apiBaseUrl + "/user/getbyteam/" + teamId);
   }
 
   getByCompany(companyId: number) {
-    const headers = new HttpHeaders({ Authorization : 'Basic ' + btoa(localStorage.getItem('username') + ":" + localStorage.getItem('password')) });
-    return this.http.get<Array<User>>(environment.apiBaseUrl + "/user/allbycompany/" + companyId, { headers });
+    return this.http.get<Array<User>>(environment.apiBaseUrl + "/user/allbycompany/" + companyId);
   }
 
   getAtMyCompany() {
-    const headers = new HttpHeaders({ Authorization : 'Basic ' + btoa(localStorage.getItem('username') + ":" + localStorage.getItem('password')) });
-    return this.http.get<Array<User>>(environment.apiBaseUrl + "/user/allatmycompany", { headers });
+    return this.http.get<Array<User>>(environment.apiBaseUrl + "/user/allatmycompany");
+  }
+
+  getCurrentUser() {
+    return this.http.get<User>(environment.apiBaseUrl + "/user/currentuser");
   }
 
   kickFromTeam(userId: number) {
-    const headers = new HttpHeaders({ Authorization : 'Basic ' + btoa(localStorage.getItem('username') + ":" + localStorage.getItem('password')) });
-    return this.http.put<User>(environment.apiBaseUrl + "/user/kickfromteam", userId, { headers });
+    return this.http.put<User>(environment.apiBaseUrl + "/user/kickfromteam", userId);
+  }
+
+  leaveCompany(userId: number) {
+    return this.http.post<any>(environment.apiBaseUrl + "/user/leavecompany", userId);
+  }
+
+  updateUser(user: User) {
+    return this.http.put<User>(environment.apiBaseUrl + "/user/update", user);
   }
 }

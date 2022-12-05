@@ -10,32 +10,31 @@
         <div class = "form-group">
           <label class = "col-md-4 control-label" for = "title">Title</label>
           <div class = "col-md-4">
-            <input id = "title" name = "title" type = "text" class = "form-control input-md"
-                   disabled = "disabled" value = "{{ticket.title}}">
+            <input id = "title" name = "title" type = "text" class = "form-control input-md" disabled = "disabled"
+                   value = "{{ticket.title}}">
           </div>
         </div>
 
         <div class = "form-group">
           <label class = "col-md-4 control-label" for = "storypoint">Storypoint</label>
           <div class = "col-md-4">
-            <input id = "storypoint" name = "storypoint" type = "number"
-                   class = "form-control input-md" disabled = "disabled" value = "{{ticket.storyPoints}}">
+            <input id = "storypoint" name = "storypoint" type = "number" class = "form-control input-md"
+                   disabled = "disabled" value = "{{ticket.storyPoints}}">
           </div>
         </div>
 
         <div class = "form-group">
           <label class = "col-md-4 control-label" for = "description">Description</label>
           <div class = "col-md-4">
-            <input id = "description" name = "description" type = "text"
-                   class = "form-control input-md" disabled = "disabled" value = "{{ticket.description}}">
+            <input id = "description" name = "description" type = "text" class = "form-control input-md"
+                   disabled = "disabled" value = "{{ticket.description}}">
           </div>
         </div>
 
         <div class = "form-group">
           <label class = "col-md-4 control-label" for = "status">Project</label>
           <div class = "col-md-4">
-            <input id = "project" name = "project" type = "text"
-                   class = "form-control input-md" disabled = "disabled"
+            <input id = "project" name = "project" type = "text" class = "form-control input-md" disabled = "disabled"
                    value = "{{ticket.project == null?'':ticket.project.name}}">
           </div>
         </div>
@@ -43,8 +42,7 @@
         <div class = "form-group">
           <label class = "col-md-4 control-label" for = "assignee">Assignee</label>
           <div class = "col-md-4">
-            <input id = "assignee" name = "assignee" type = "text"
-                   class = "form-control input-md" disabled = "disabled"
+            <input id = "assignee" name = "assignee" type = "text" class = "form-control input-md" disabled = "disabled"
                    value = "{{ticket.assignee == null? '':ticket.assignee.name}}">
           </div>
         </div>
@@ -52,15 +50,31 @@
         <div class = "form-group">
           <label class = "col-md-4 control-label" for = "status">Status</label>
           <div class = "col-md-4">
-            <input id = "status" name = "status" type = "text"
-                   class = "form-control input-md" disabled = "disabled"
+            <input id = "status" name = "status" type = "text" class = "form-control input-md" disabled = "disabled"
                    value = "{{ticket.status}}">
           </div>
         </div>
+        <!--
+                <table mat-table [dataSource] = "documents">
 
-        <button id = "edit" name = "edit" class = "btn btn-primary "
-                color = "primary"
-                (click) = "edit()">Edit
+                  <ng-container matColumnDef = "name">
+                    <th mat-header-cell *matHeaderCellDef> Documents</th>
+                    <td mat-cell *matCellDef = "let document"> {{document.name}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef = "actions">
+                    <th mat-header-cell *matHeaderCellDef> Actions</th>
+                    <mat-cell *matCellDef = "let document">
+                      <button mat-button (click) = "downloadDocument(document.id)">Download</button>
+                    </mat-cell>
+                  </ng-container>
+
+                  <tr mat-header-row *matHeaderRowDef = "displayedDocumentColumns"></tr>
+                  <tr mat-row *matRowDef = "let row; columns: displayedCommentColumns;"></tr>
+                </table>
+        -->
+
+        <button id = "edit" name = "edit" class = "btn btn-primary " color = "primary" (click) = "edit()">Edit
         </button>
       </fieldset>
     </form>
@@ -89,18 +103,30 @@
 
             <div class = "col-md-4">
               <button id = "addcomment" name = "registration" class = "btn btn-primary" mat-flat-button
-                      color = "primary"
-                      (click) = "addcomment(comment.value)">Create
+                      color = "primary" (click) = "addcomment(comment.value)">Create
+              </button>
+            </div>
+          </ng-container>
+
+          <ng-container *ngIf = "editcommentvisible">
+            <h4>Edit comment</h4>
+
+            <div class = "form-group">
+              <label class = "col-md-4 control-label" for = "description">Description</label>
+              <div class = "col-md-4">
+                <textarea [(ngModel)] = "commentem.commentMessage" [value] = "commentmessage" class = "form-control"
+                          id = "comment2"></textarea>
+              </div>
+            </div>
+
+            <div class = "col-md-4">
+              <button id = "editcomment" name = "registration" class = "btn btn-primary" mat-flat-button
+                      color = "primary" (click) = "updateComment()">Update comment
               </button>
             </div>
           </ng-container>
           <br>
           <table mat-table [dataSource] = "comments">
-
-            <ng-container matColumnDef = "id">
-              <th mat-header-cell *matHeaderCellDef> No.</th>
-              <td mat-cell *matCellDef = "let comment"> {{comment.id}} </td>
-            </ng-container>
 
             <ng-container matColumnDef = "creator">
               <th mat-header-cell *matHeaderCellDef> Creator</th>
@@ -117,6 +143,18 @@
               <td mat-cell *matCellDef = "let comment"> {{comment.commentMessage}} </td>
             </ng-container>
 
+            <ng-container matColumnDef = "actions">
+              <th mat-header-cell *matHeaderCellDef> Actions</th>
+              <td mat-cell *matCellDef = "let comment">
+                <button color = "primary" (click) = "editComment(comment)">
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button color = "primary" (click) = "deleteComment(comment)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </td>
+            </ng-container>
+
             <tr mat-header-row *matHeaderRowDef = "displayedCommentColumns"></tr>
             <tr mat-row *matRowDef = "let row; columns: displayedCommentColumns;"></tr>
           </table>
@@ -125,8 +163,7 @@
           <br>
           <div class = "col-md-4">
             <button id = "setvisibleaddhour" name = "setvisibleaddhour" class = "btn btn-primary" mat-flat-button
-                    color = "primary"
-                    (click) = "setvisibleaddhour()">{{ addhourvisible ? 'Cancel' : 'Log time'}}
+                    color = "primary" (click) = "setvisibleaddhour()">{{ addhourvisible ? 'Cancel' : 'Log time'}}
             </button>
           </div>
 
@@ -143,12 +180,10 @@
                 <label class = "col-md-4 control-label" for = "storypoint">Hours to log</label>
                 <div class = "col-md-4">
                   <input #hours [(ngModel)] = "loghours" id = "hours" name = "hours" type = "number" placeholder = ""
-                         class = "form-control input-md"
-                         required = "">
+                         class = "form-control input-md" required = "">
                 </div>
               </div>
-              <button id = "loghour" name = "loghour" class = "btn btn-primary" mat-flat-button
-                      color = "primary"
+              <button id = "loghour" name = "loghour" class = "btn btn-primary" mat-flat-button color = "primary"
                       (click) = "loghurs()">Log hours
               </button>
             </form>
