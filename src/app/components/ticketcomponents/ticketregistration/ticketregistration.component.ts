@@ -31,6 +31,7 @@ export class TicketregistrationComponent implements OnInit {
   teamnotnull = false;
   file: any;
   ticket: Ticket;
+  selectedFiles: FileList;
 
 
   constructor(private documentService: DocumentService, private projectsService: ProjectsService,
@@ -50,8 +51,18 @@ export class TicketregistrationComponent implements OnInit {
     })
   }
 
-  getfile(event: any) {
-    this.file = event.target.files;
+  selectFile(event: any) {
+    const file = event.target.files.item(0);
+    if (file.type.match('image.*')) {
+      var size = event.target.files[0].size;
+      if (size > 1000000) {
+        alert("size must not exceeds 1 MB");
+      } else {
+        this.selectedFiles = event.target.files;
+      }
+    } else {
+      alert('invalid format!');
+    }
   }
 
   onSubmit() {

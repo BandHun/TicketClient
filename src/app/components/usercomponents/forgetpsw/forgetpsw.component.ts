@@ -4,9 +4,7 @@ import {Router} from "@angular/router";
 import {NotificationsComponent} from "../../commoncomponents/notifications/notifications.component";
 
 @Component({
-  selector: 'app-forgetpsw',
-  templateUrl: './forgetpsw.component.html',
-  styleUrls: ['./forgetpsw.component.css']
+  selector: 'app-forgetpsw', templateUrl: './forgetpsw.component.html', styleUrls: ['./forgetpsw.component.css']
 })
 export class ForgetpswComponent implements OnInit {
 
@@ -21,9 +19,12 @@ export class ForgetpswComponent implements OnInit {
   }
 
   sendForgetPswd(email: string) {
-    this.userService.sendForgetPassword(email).subscribe(() =>
-      NotificationsComponent.notification("If you ve an account, then we sent you a new password in email!")
-    )
+    this.userService.sendForgetPassword(email).subscribe(
+      () => NotificationsComponent.notification("If you ve an account, then we sent you a new password in email!"))
+  }
+
+  toLogin() {
+    this.router.navigate(['/login']);
   }
 
 }

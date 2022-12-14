@@ -15,8 +15,13 @@ export class DocumentService {
     const formdata: FormData = new FormData();
 
     formdata.append('file', file);
+    formdata.append('filename', file.name);
 
     return this.http.post(environment.apiBaseUrl + "/document/toticket/" + ticketId, formdata);
+  }
+
+  getDocumentToTicket(ticketId: number) {
+    return this.http.get<Array<Document>>(environment.apiBaseUrl + "/document/getbyticketid/" + ticketId);
   }
 
   uploadDocumentToComment(commentId: number, file: any) {
@@ -25,9 +30,5 @@ export class DocumentService {
 
   deleteDocument(documentId: number) {
     return this.http.delete(environment.apiBaseUrl + "/document/delete/" + documentId);
-  }
-
-  getDocument(documentId: number) {
-    return this.http.delete(environment.apiBaseUrl + "/document/get/" + documentId);
   }
 }

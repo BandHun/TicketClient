@@ -49,64 +49,21 @@ import {SprintsComponent} from './components/sprintcomponents/sprints/sprints.co
 import {SprinteditComponent} from './components/sprintcomponents/sprintedit/sprintedit.component';
 import {UsereditComponent} from './components/usercomponents/useredit/useredit.component';
 import {TeamtablesComponent} from './components/teamcomponents/teamtables/teamtables.component';
-import { ForgetpswComponent } from './components/usercomponents/forgetpsw/forgetpsw.component';
+import {ForgetpswComponent} from './components/usercomponents/forgetpsw/forgetpsw.component';
+import {CommentComponent} from './components/commentcomponents/comment/comment.component';
+import {TestComponent} from './components/commentcomponents/test/test.component';
+import {HourtableComponent} from './components/hourcomponents/hourtable/hourtable.component';
+import {TicketboardComponent} from './components/ticketcomponents/ticketboard/ticketboard.component';
+import {DragDropModule} from "@angular/cdk/drag-drop";
+import {
+  TicketBoardComponentComponent
+} from './components/ticketcomponents/ticket-board-component/ticket-board-component.component';
+import {MatCardModule} from "@angular/material/card";
 
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    LoginComponent,
-    HomeComponent,
-    HeaderComponent,
-    NavbarComponent,
-    TicketsComponent,
-    UpdateticketsComponent,
-    RegistrationComponent,
-    CompanyregistrationComponent,
-    TeamsregistrationComponent,
-    TeamseditComponent,
-    TicketregistrationComponent,
-    TicketeditComponent,
-    ProfileComponent,
-    TicketdetailsComponent,
-    NotificationsComponent,
-    ProjectsComponent,
-    ProjectdetailsComponent,
-    JoinrequestComponent,
-    UsersComponent,
-    TeamtableComponent,
-    SprintsComponent,
-    SprinteditComponent,
-    UsereditComponent,
-    TeamtablesComponent,
-    ForgetpswComponent,
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    FormsModule,
-    HttpClientModule,
-    MatButtonModule,
-    MatToolbarModule,
-    MatFormFieldModule,
-    ReactiveFormsModule,
-    FormsModule,
-    MatInputModule,
-    MatOptionModule,
-    MatSelectModule,
-    BrowserAnimationsModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatDatepickerModule,
-    MatTabsModule,
-    MatSidenavModule,
-    MatIconModule,
-    MatTooltipModule,
-    MatDatepickerModule,
-    MatButtonModule,
-    MatFormFieldModule,
-    MatNativeDateModule,
-  ],
+  declarations: [AppComponent, LoginComponent, HomeComponent, HeaderComponent, NavbarComponent, TicketsComponent, UpdateticketsComponent, RegistrationComponent, CompanyregistrationComponent, TeamsregistrationComponent, TeamseditComponent, TicketregistrationComponent, TicketeditComponent, ProfileComponent, TicketdetailsComponent, NotificationsComponent, ProjectsComponent, ProjectdetailsComponent, JoinrequestComponent, UsersComponent, TeamtableComponent, SprintsComponent, SprinteditComponent, UsereditComponent, TeamtablesComponent, ForgetpswComponent, CommentComponent, TestComponent, HourtableComponent, TicketboardComponent, TicketBoardComponentComponent,],
+  imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule, MatButtonModule, MatToolbarModule, MatFormFieldModule, ReactiveFormsModule, FormsModule, MatInputModule, MatOptionModule, MatSelectModule, BrowserAnimationsModule, MatTableModule, MatPaginatorModule, MatDatepickerModule, MatTabsModule, MatSidenavModule, MatIconModule, MatTooltipModule, MatDatepickerModule, MatButtonModule, MatFormFieldModule, MatNativeDateModule, DragDropModule, MatCardModule,],
   providers: [LoginService, {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptorService, multi: true}],
   bootstrap: [AppComponent]
 })

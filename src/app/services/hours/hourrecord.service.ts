@@ -12,21 +12,16 @@ export class HourrecordService {
   }
 
   public getRecordsForTicket(ticketId: number) {
-    return this.http.get<Array<HourRecords>>(environment.apiBaseUrl + "/hours/getforticket/" + ticketId
-    );
+    return this.http.get<Array<HourRecords>>(environment.apiBaseUrl + "/hours/getforticket/" + ticketId);
   }
 
-  public getRecordsForUser(userId: number) {
-    return this.http.get<number>(environment.apiBaseUrl + "/hours/getforuser/" + userId
-    );
+  public getRecordsForUserInDay(userId: number, day: Date) {
+    return this.http.post<number>(environment.apiBaseUrl + "/hours/getforuser/" + userId, day);
   }
 
   public createHourRecord(ticketId: number, toDate: Date, hours: number) {
     return this.http.post<HourRecords>(environment.apiBaseUrl + "/hours/loghour", {
-        ticketId: ticketId,
-        toDate: toDate,
-        hours: hours
-      }
-    );
+      ticketId: ticketId, toDate: toDate, hours: hours
+    });
   }
 }

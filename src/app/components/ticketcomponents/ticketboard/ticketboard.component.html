@@ -1,0 +1,46 @@
+<div class = "root">
+  <div class = "navbar has-background-dark">
+    <div class = "navbar-brand">
+      <h1 class = "app-name has-gradient-text">{{teamtable.name}}</h1>
+    </div>
+  </div>
+
+  <div class = "form-group">
+    <label class = "col-md-4 control-label" for = "sprint">Select Sprint</label>
+    <div class = "col-md-3">
+      <select [(ngModel)] = "sprint" id = "sprint" name = "project" class = "form-control"
+              (change) = "sprintchange(sprint)">
+        <option *ngFor = "let sprinti of sprints" [ngValue] = "sprinti" [selected] = "myequal(sprinti, sprint)">
+          {{ sprinti.startDate }} - {{ sprinti.endDate }}
+        </option>
+      </select>
+    </div>
+  </div>
+
+  <mat-card *ngIf = "board!=null">
+    <div class = "board">
+
+      <div class = "board-wrapper">
+
+        <div class = "board-columns" cdkDropListGroup>
+          <div class = "board-column" *ngFor = "let column of board.columns">
+
+            <div class = "column-title">
+              {{ column.name }}
+            </div>
+
+            <div class = "tasks-container" cdkDropList [cdkDropListData] = "column.tickets"
+                 (cdkDropListDropped) = "drop($event)">
+              <div class = "task" *ngFor = "let item of column.tickets" cdkDrag>
+                <app-ticket-board-component [ticket] = "item"></app-ticket-board-component>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </mat-card>
+</div>

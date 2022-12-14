@@ -47,15 +47,4 @@ export class TicketService {
     return this.http.delete<any>(environment.apiBaseUrl + "/ticket/delete/" + ticketId);
   }
 
-  public addComment(ticketId: number, message: string) {
-    return this.http.post<any>(environment.apiBaseUrl + "/comment/add/" + ticketId, message);
-  }
-
-  public updateComment(comment: Comment) {
-    return this.http.post<any>(environment.apiBaseUrl + "/comment/update", comment);
-  }
-
-  public deleteComment(commentId: number) {
-    return this.http.delete<any>(environment.apiBaseUrl + "/comment/add/" + commentId);
-  }
 }

@@ -1,12 +1,13 @@
-import { User } from './User';
-import { Document } from './Document';
+import {User} from './User';
 
-export interface Comment {
+export class Comment {
   id: number;
   isValid: boolean;
   commentMessage: string;
   creator: User;
   createDateTime: Date;
   updateDateTime: Date;
-  documents: Array<Document>;
+
+  constructor() {
+  }
 }

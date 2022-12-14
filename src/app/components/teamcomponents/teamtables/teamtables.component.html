@@ -13,7 +13,8 @@
           <div>
             <th mat-header-cell *matHeaderCellDef> Actions</th>
             <mat-cell *matCellDef = "let table">
-              <a href = "/teamtable/{{table.id}}">Visit</a>
+              <button (click) = "tableview(table.id)">Table view</button>
+              <button (click) = "listview(table.id)">List view</button>
             </mat-cell>
           </div>
         </ng-container>

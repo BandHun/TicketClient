@@ -1,7 +1,14 @@
 <mat-toolbar class = "navbar-class">
-  <span>For development only</span>
-
   <div class = "spacer"></div>
-
-  <a mat-button class = "navbar-class" href = "companyregistration">companyregistration</a>
+  <div *ngIf = "user!=null">
+    <mat-menu-item [routerLink] = "['/profile']" class = "with-icon padded mymargin"
+                   (click) = "$event.stopPropagation()">
+      <span>{{ user.name }}</span>
+    </mat-menu-item>
+  </div>
+  <div *ngFor = "let i of routeList">
+    <mat-menu-item [routerLink] = "['/'+ i.route]" class = "with-icon mymargin" (click) = "$event.stopPropagation()">
+      <mat-icon [matTooltip] = "i.toolTip">{{ i.icon }}</mat-icon>&nbsp;
+    </mat-menu-item>
+  </div>
 </mat-toolbar>

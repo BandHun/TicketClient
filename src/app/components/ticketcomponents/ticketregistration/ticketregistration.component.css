@@ -14,8 +14,11 @@ table {
 }
 
 .my-form {
+  margin-top: 10%;
   padding: 5%;
-  background: #0062cc;
+  background: #344955;
   box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);
-  color: #fff;
+  color: #F9AA33
+
+
 }

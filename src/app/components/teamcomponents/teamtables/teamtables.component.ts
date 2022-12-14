@@ -5,9 +5,7 @@ import {TeamstableService} from "../../../services/teamtable/teamstable.service"
 import {TeamsTable} from "../../../../models/TeamsTable";
 
 @Component({
-  selector: 'app-teamtables',
-  templateUrl: './teamtables.component.html',
-  styleUrls: ['./teamtables.component.css']
+  selector: 'app-teamtables', templateUrl: './teamtables.component.html', styleUrls: ['./teamtables.component.css']
 })
 export class TeamtablesComponent implements OnInit {
 
@@ -26,5 +24,14 @@ export class TeamtablesComponent implements OnInit {
       });
       this.dataSource._updateChangeSubscription();
     });
+  }
+
+  tableview(tableId: number) {
+    this.router.navigate(['/dargandrop/' + tableId]);
+
+  }
+
+  listview(tableId: number) {
+    this.router.navigate(['/teamtable/' + tableId]);
   }
 }

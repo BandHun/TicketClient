@@ -20,7 +20,10 @@ import {DocumentService} from "../../../services/document/document.service";
 export class TicketeditComponent implements OnInit {
 
   projects = Array<Project>();
+  selectedProject: Project = null;
+
   ticket: Ticket;
+  ticketToStor: Ticket
   users = Array<User>();
   statuses = Array<string>();
   assignee: User;
@@ -29,7 +32,6 @@ export class TicketeditComponent implements OnInit {
   teams = Array<Teams>();
   sprint: Sprint;
   sprints = Array<Sprint>();
-  project: Project;
   teamnotnull = false;
   file: any;
   selectedFiles: FileList;
@@ -38,24 +40,49 @@ export class TicketeditComponent implements OnInit {
   constructor(private projectsService: ProjectsService, private documentService: DocumentService,
               private teamService: TeamsService, private route: ActivatedRoute, private ticketService: TicketService,
               private teamsService: TeamsService, private userService: UserService, private router: Router) {
+    this.projects = JSON.parse(this.route.snapshot.params['projects']);
   }
 
-  ngOnInit(): void {
+  async ngOnInit() {
+    /*this.projectsService.getAllProjects().subscribe(allproject => {
+      allproject.forEach(proj => this.projects.push(proj));
+      this.isTicketReady()
+    });*/
+    this.teamService.getTeamsByCompany().subscribe(teams => this.teams = teams);
+    this.teamService.getsprints(Number(this.route.snapshot.params['id'])).subscribe(sprints => {
+      this.sprints = sprints;
+      this.isTicketReady()
+    }, (err) => {
+      this.sprints = null
+    })
+    this.userService.getAtMyCompany().subscribe(users => {
+      users.forEach(user => {
+        this.users.push(user);
+      });
+      this.isTicketReady()
+    });
     this.route.params.subscribe(
-      params => this.ticketService.getTicketsById(Number(params['ticketId'])).subscribe(ticket => {
-        this.ticket = ticket;
-        this.userService.getByCompany(this.ticket.author.company.id).subscribe(users => {
-          users.forEach(user => this.users.push(user));
-        });
-        this.projectsService.getAllProjects().subscribe(allproject => {
-          allproject.forEach(proj => this.projects.push(proj));
-        });
-
+      params => this.ticketService.getTicketsById(Number(this.route.snapshot.params['id'])).subscribe(ticket => {
+        this.ticketToStor = ticket;
+        this.isTicketReady()
       }));
     for (var status in TicketStatus) {
       this.statuses.push(status);
     }
-    this.teamService.getTeamsByCompany().subscribe(teams => this.teams = teams);
+  }
+
+  isTicketReady() {
+    if (this.ticketToStor != null) {
+      if (this.users != null && this.users.length != 0) {
+        if (this.projects != null && this.projects.length != 0) {
+          if (this.sprints != null && this.sprints.length != 0) {
+            this.ticket = this.ticketToStor
+            this.selectedProject = this.ticket.project;
+            console.log(this.selectedProject)
+          }
+        }
+      }
+    }
   }
 
   save2() {
@@ -66,7 +93,9 @@ export class TicketeditComponent implements OnInit {
   save(): void {
     this.ticketService.save(this.ticket).subscribe(ticket => {
       this.ticket = ticket;
-      this.documentService.uploadDocumentToTicket(this.ticket.id, this.selectedFiles[0])
+      this.documentService.uploadDocumentToTicket(this.ticket.id, this.selectedFiles[0]).subscribe(
+        () => NotificationsComponent.notification("Documentum uploaded succesfully"))
+
       this.router.navigate(['tickets']);
       NotificationsComponent.notification("Ticket updated");
     }, (err) => {
@@ -75,21 +104,10 @@ export class TicketeditComponent implements OnInit {
     });
   }
 
-  myequal(o1: any, o2: any) {
-    return equals(o1, o2);
-  }
-
-  teamchanged(team: Teams): void {
-    this.ticket.sprint = null;
-    console.log(this.team);
-    this.teamService.getsprints(22).subscribe(sprints => {
-      this.sprints = sprints;
-
-    }, (err) => {
-      this.sprints = null
-    })
+  teamchanged(): void {
     this.ticket.assignee = null;
     this.teamnotnull = true;
+    this.projects = [...this.projects]
     this.teamService.getUsers(22).subscribe(users => {
       this.users = users
     })
@@ -98,7 +116,6 @@ export class TicketeditComponent implements OnInit {
 
   selectFile(event: any) {
     const file = event.target.files.item(0);
-
     if (file.type.match('image.*')) {
       var size = event.target.files[0].size;
       if (size > 1000000) {
@@ -109,6 +126,5 @@ export class TicketeditComponent implements OnInit {
     } else {
       alert('invalid format!');
     }
-
   }
 }

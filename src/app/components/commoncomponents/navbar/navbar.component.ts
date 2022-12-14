@@ -5,9 +5,7 @@ import {filter} from "rxjs";
 import {User, UserLevel} from "../../../../models/User";
 
 @Component({
-  selector: 'app-navbar',
-  templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.css']
+  selector: 'app-navbar', templateUrl: './navbar.component.html', styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
 
@@ -16,14 +14,8 @@ export class NavbarComponent implements OnInit {
   showHeader = false;
   user: User;
 
-  constructor(
-    private router: Router
-  ) {
-    this.router.events.pipe(
-      filter(e => e instanceof
-        NavigationEnd
-      )
-    ).subscribe(event => this.modifyHeader(event));
+  constructor(private router: Router) {
+    this.router.events.pipe(filter(e => e instanceof NavigationEnd)).subscribe(event => this.modifyHeader(event));
   }
 
   ngOnInit(): void {
@@ -44,7 +36,7 @@ export class NavbarComponent implements OnInit {
 
   foradmin(b: boolean) {
     if (b) {
-      if (this.user.userlevel === UserLevel.ADMIN) {
+      if (this.user.userLevel === UserLevel.ADMIN) {
         return true
       } else {
         return false;

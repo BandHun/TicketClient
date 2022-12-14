@@ -13,8 +13,8 @@ export class SprintService {
   constructor(private http: HttpClient) {
   }
 
-  public createSprint(sprint: Sprint) {
-    return this.http.post<Teams>(environment.apiBaseUrl + "/sprint/create", sprint);
+  public createSprint(sprint: Sprint, teamId: number) {
+    return this.http.post<Teams>(environment.apiBaseUrl + "/sprint/create/" + teamId, sprint);
   }
 
   public joinTeam(teamId: number) {

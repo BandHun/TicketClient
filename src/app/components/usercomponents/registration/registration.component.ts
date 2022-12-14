@@ -14,7 +14,8 @@ export class RegistrationComponent implements OnInit {
   registerForm: FormGroup;
   passwordMatch: Boolean;
 
-  constructor(private router: Router, private formBuilder: FormBuilder, private registrationService: RegistrationService) {
+  constructor(private router: Router, private formBuilder: FormBuilder,
+              private registrationService: RegistrationService) {
     this.passwordMatch = true;
   }
 
@@ -29,7 +30,7 @@ export class RegistrationComponent implements OnInit {
   ngOnInit(): void {
     this.registerForm = this.formBuilder.group({
       name: [null, [Validators.required]],
-      emailaddress: [null, [Validators.required, Validators.email, Validators.minLength(6)]],
+      emailaddress: [null, [Validators.required, Validators.email, Validators.minLength(5)]],
       password: [null, [Validators.required, Validators.minLength(3)]],
       confirmPassword: [null, [Validators.required, Validators.minLength(3)]]
     })
@@ -37,16 +38,20 @@ export class RegistrationComponent implements OnInit {
 
   onSubmit() {
     if (this.registerForm?.invalid) {
+      NotificationsComponent.notification("Register form invalid");
       return;
     }
     this.registrationService.registration(this.registerForm.get('name')?.value,
-      this.registerForm.get('emailaddress')?.value,
-      this.registerForm.get('password')?.value).subscribe(user => {
+      this.registerForm.get('emailaddress')?.value, this.registerForm.get('password')?.value).subscribe(user => {
       this.router.navigate(['/login']);
       NotificationsComponent.notification("Registration completed! Please Log in!")
     }, (err) => {
       NotificationsComponent.notification(err.message)
     });
+  }
+
+  toLogin() {
+    this.router.navigate(['/login']);
   }
 
 }

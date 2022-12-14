@@ -24,9 +24,13 @@ import {SprinteditComponent} from "./components/sprintcomponents/sprintedit/spri
 import {TeamtablesComponent} from "./components/teamcomponents/teamtables/teamtables.component";
 import {TeamtableComponent} from "./components/teamcomponents/teamtable/teamtable.component";
 import {ForgetpswComponent} from './components/usercomponents/forgetpsw/forgetpsw.component';
+import {TestComponent} from "./components/commentcomponents/test/test.component";
+import {HourtableComponent} from "./components/hourcomponents/hourtable/hourtable.component";
+import {TicketboardComponent} from "./components/ticketcomponents/ticketboard/ticketboard.component";
 
-const routes: Routes = [
-  //COMMON
+
+//@formatter:off
+const routes: Routes = [//COMMON
   {path: "login", component: LoginComponent},
   {path: "logout", component: LoginComponent},
   {path: "home", component: HomeComponent},
@@ -53,28 +57,30 @@ const routes: Routes = [
   //TABLES
   {path: "teamtables", component: TeamtablesComponent},
   {path: "teamtable/:id", component: TeamtableComponent},
+  {path: "dargandrop", component: TicketboardComponent},
+  {path: "dargandrop/:id", component: TicketboardComponent},
 
 
   //USERS
-  {path: "profile", component: ProfileComponent},
-  {path: "users", component: UsersComponent},
+  {path: "profile", component: ProfileComponent}, {path: "users", component: UsersComponent},
   {path: "useredit/:id", component: UsereditComponent},
   {path: "profile/:id", component: ProfileComponent},
 
 
-  //HOURS
+  //TESTING
+  {path: "test", component: TestComponent},
 
+  //HOURS
+  {path: "hours", component: HourtableComponent},
 
   //SPRINTS
   {path: "sprintcreate/:id", component: SprintsComponent},
   {path: "sprintedit/:id", component: SprinteditComponent},
 
-  {path: "", redirectTo: "home", pathMatch: "full"},
-];
-
+  {path: "", redirectTo: "home", pathMatch: "full"},];
+//@formatter:on
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  imports: [RouterModule.forRoot(routes)], exports: [RouterModule]
 })
 export class AppRoutingModule {
 }

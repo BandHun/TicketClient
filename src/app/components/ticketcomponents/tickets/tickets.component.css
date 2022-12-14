@@ -15,7 +15,18 @@ table {
 
 .my-form {
   padding: 5%;
-  background: #0062cc;
   box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);
-  color: #fff;
+  color: black;
+}
+
+.mat-column-title {
+  width: 30%;
+}
+
+.mat-column-project {
+  width: 20%;
+}
+
+.mat-column-assignee {
+  width: 20%;
 }

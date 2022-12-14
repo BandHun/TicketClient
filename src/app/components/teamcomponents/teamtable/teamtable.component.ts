@@ -43,13 +43,13 @@ export class TeamtableComponent implements OnInit {
 
   sprintchange(selected: Sprint) {
     this.dataSource = new MatTableDataSource<Ticket>();
-    this.tableService.getTicketsBySprintId(selected.id).subscribe(tickets => {
-      tickets.forEach(ticket => {
-        this.dataTostore.data.push(ticket)
-        this.dataSource.data.push(ticket);
-        this.dataSource._updateChangeSubscription();
-      })
-    });
+
+    selected.tickets.forEach(ticket => {
+      this.dataTostore.data.push(ticket)
+      this.dataSource.data.push(ticket);
+      this.dataSource._updateChangeSubscription();
+    })
+
   }
 
   filter(user: User) {

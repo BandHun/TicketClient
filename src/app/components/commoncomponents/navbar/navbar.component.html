@@ -3,8 +3,7 @@
 
     <div *ngFor = "let i of routeList">
       <div *ngIf = "foradmin(i.admin)">
-        <mat-menu-item [routerLink] = "['/'+ i.route]"
-                       class = "with-icon padded glow-on-hover"
+        <mat-menu-item [routerLink] = "['/'+ i.route]" class = "with-icon padded glow-on-hover"
                        (click) = "$event.stopPropagation()">
           <mat-icon [matTooltip] = "i.toolTip">{{ i.icon }}</mat-icon>&nbsp;
           <span [hidden] = "collapse">{{ i.name }}</span>
@@ -12,7 +11,7 @@
       </div>
     </div>
   </mat-sidenav>
-  <mat-sidenav-content class = "padded">
+  <mat-sidenav-content>
     <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>

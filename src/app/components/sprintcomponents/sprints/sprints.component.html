@@ -1,37 +1,23 @@
 <div class = "container my-container">
   <div class = "col-lg-12 my-form">
-
-    <script>
-      $(function () {
-        $('#startdate').datepicker({dateFormat: 'dd/MM/yyyy'});
-      });
-    </script>
     <h1>Sprint create</h1>
     <div>
-      <form [formGroup] = "createsprintform" (ngSubmit) = "onSubmit()">
+      <form>
 
         <label>Start date</label>
         <br>
 
-        <mat-form-field appearance = "outline">
-          <input [(ngModel)] = "sprint.startDate" matInput formControlName = "enddate" [matDatepicker] = "startdate"
-                 (click) = "startdate.open()">
-          <mat-datepicker-toggle matSuffix [for] = "startdate"></mat-datepicker-toggle>
-          <mat-datepicker #startdate></mat-datepicker>
-        </mat-form-field>
+        <input [(ngModel)] = "startDate" class = " col-md-4 form-control input-md" type = "date" id = "startDate"
+               name = "startDate">
 
         <br>
         <label>End date</label>
         <br>
-        <mat-form-field appearance = "outline">
-          <input [(ngModel)] = "sprint.startDate" matInput formControlName = "enddate" [matDatepicker] = "enddate"
-                 (click) = "enddate.open()">
-          <mat-datepicker-toggle matSuffix [for] = "enddate"></mat-datepicker-toggle>
-          <mat-datepicker #enddate></mat-datepicker>
-        </mat-form-field>
+        <input [(ngModel)] = "endDate" class = " col-md-4 form-control input-md" type = "date" id = "endDate"
+               name = "endDate">
         <br>
         <button id = "registration" name = "registration" class = "btn btn-primary" mat-flat-button color = "primary"
-                type = "submit">Make sprint
+                type = "submit" (click) = "onSubmit()">Make sprint
         </button>
       </form>
     </div>

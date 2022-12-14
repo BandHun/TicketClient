@@ -27,6 +27,10 @@ export class UserService {
     return this.http.get<Array<User>>(environment.apiBaseUrl + "/user/allbycompany/" + companyId);
   }
 
+  getMyCompanyUsers() {
+    return this.http.get<Array<User>>(environment.apiBaseUrl + "/user/allmycompany");
+  }
+
   getAtMyCompany() {
     return this.http.get<Array<User>>(environment.apiBaseUrl + "/user/allatmycompany");
   }
@@ -45,5 +49,9 @@ export class UserService {
 
   updateUser(user: User) {
     return this.http.put<User>(environment.apiBaseUrl + "/user/update", user);
+  }
+
+  setAdmin(user: User) {
+    return this.http.put<User>(environment.apiBaseUrl + "/user/setadmin", user.id);
   }
 }

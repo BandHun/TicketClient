@@ -1,22 +1,18 @@
 <div class = "container my-container">
   <div class = "col-lg-12 my-form">
 
-    <!-- Form Name -->
     <legend>Create ticket</legend>
 
-    <!-- Title-->
-    <div class = "form-group">
-      <label class = "col-md-8 control-label" for = "title">Title</label>
-      <div class = "col-md-8">
-        <input [(ngModel)] = "ticket.title" id = "title" name = "title" type = "text" placeholder = ""
-               class = "form-control input-md" required>
-      </div>
+    <label class = "col-md-12 control-label" for = "title">Title</label>
+    <div class = "col-md-12">
+      <input [(ngModel)] = "ticket.title" id = "title" name = "title" type = "text" placeholder = ""
+             class = "form-control input-md" required>
     </div>
 
     <!-- Storypoint-->
     <div class = "form-group">
-      <label class = "col-md-8 control-label" for = "storypoint">Story points</label>
-      <div class = "col-md-8">
+      <label class = "col-md-12 control-label" for = "storypoint">Story points</label>
+      <div class = "col-md-12">
         <input [(ngModel)] = "ticket.storyPoints" id = "storypoint" name = "storypoint" type = "number" placeholder = ""
                class = "form-control input-md">
 
@@ -25,16 +21,16 @@
 
     <!-- Description -->
     <div class = "form-group">
-      <label class = "col-md-8 control-label" for = "description">Description</label>
-      <div class = "col-md-8">
+      <label class = "col-md-12 control-label" for = "description">Description</label>
+      <div class = "col-md-12">
         <textarea #description class = "form-control" id = "description" name = "description"></textarea>
       </div>
     </div>
 
     <!-- Project -->
     <div class = "form-group">
-      <label class = "col-md-8 control-label" for = "assignee">Select Project</label>
-      <div class = "col-md-8">
+      <label class = "col-md-12 control-label" for = "assignee">Select Project</label>
+      <div class = "col-md-12">
         <select [(ngModel)] = "ticket.project" id = "project" class = "form-control">
           <option *ngFor = "let project of projects" [ngValue] = "project">
             {{project.name}}
@@ -44,8 +40,8 @@
 
       <!-- Team -->
       <div class = "form-group">
-        <label class = "col-md-8 control-label" for = "assignee">Select Team</label>
-        <div class = "col-md-8">
+        <label class = "col-md-12 control-label" for = "assignee">Select Team</label>
+        <div class = "col-md-12">
           <select [(ngModel)] = "ticket.team" id = "team" class = "form-control" (change) = "teamchanged()">
             <option *ngFor = "let team of teams" [ngValue] = "team">
               {{team.name}}
@@ -55,8 +51,8 @@
 
         <!-- Sprint -->
         <div class = "form-group" *ngIf = "teamnotnull">
-          <label class = "col-md-8 control-label" for = "assignee">Select Sprint</label>
-          <div class = "col-md-8">
+          <label class = "col-md-12 control-label" for = "assignee">Select Sprint</label>
+          <div class = "col-md-12">
             <select [(ngModel)] = "ticket.sprint" id = "sprint" class = "form-control">
               <option *ngFor = "let sprint of sprints" [ngValue] = "sprint">
                 {{sprint.startDate}} - {{sprint.endDate}}
@@ -66,8 +62,8 @@
 
           <!-- Assignee -->
           <div class = "form-group" *ngIf = "teamnotnull">
-            <label class = "col-md-8 control-label" for = "assignee">Select Assignee</label>
-            <div class = "col-md-8">
+            <label class = "col-md-12 control-label" for = "assignee">Select Assignee</label>
+            <div class = "col-md-12">
               <select [(ngModel)] = "ticket.assignee" id = "assignee" class = "form-control">
                 <option *ngFor = "let user of users" [ngValue] = "user">
                   {{user.name}}
@@ -77,8 +73,12 @@
           </div>
         </div>
 
-        <label class = "col-md-8 control-label" for = "registration"></label>
-        <div class = "col-md-8">
+        <label for = "profileImage">Upload File</label>
+        <input id = "profileImage" formControlName = "profileImage" class = "form-control" type = "file"
+               (change) = "selectFile($event)" hidden>
+
+        <label class = "col-md-12 control-label" for = "registration"></label>
+        <div class = "col-md-12">
           <button id = "registration" name = "registration" class = "btn btn-primary" mat-flat-button color = "primary"
                   (click) = "onSubmit()">Create
           </button>

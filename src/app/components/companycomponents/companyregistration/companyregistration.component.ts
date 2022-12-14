@@ -33,17 +33,8 @@ export class CompanyregistrationComponent implements OnInit {
 
   registerCompany(name: string): void {
     this.companyService.createCompany(name).subscribe(company => {
-      this.userService.getById(Number(localStorage.getItem('userId'))).subscribe(user => {
-        localStorage.setItem('userId', user.id + "");
-        if (user.teams == null) {
-          this.router.navigate(['teamsregistration']);
-          NotificationsComponent.notification("Company registration success");
-        } else {
-          this.router.navigate(['home']);
-        }
-      })
-
-
+      NotificationsComponent.notification("Company registration success");
+      this.router.navigate(['home']);
     });
   }
 

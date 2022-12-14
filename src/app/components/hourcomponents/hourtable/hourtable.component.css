@@ -1,0 +1,37 @@
+.my-form {
+  padding: 5%;
+  box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);
+  color: black;
+}
+
+.mat-column-users {
+  width: 30%;
+}
+
+.mat-column-day0 {
+  width: 10%;
+}
+
+.mat-column-day1 {
+  width: 10%;
+}
+
+.mat-column-day2 {
+  width: 10%;
+}
+
+.mat-column-day3 {
+  width: 10%;
+}
+
+.mat-column-day4 {
+  width: 10%;
+}
+
+.mat-column-day5 {
+  width: 10%;
+}
+
+.mat-column-day6 {
+  width: 10%;
+}

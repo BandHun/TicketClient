@@ -1,6 +1,41 @@
 <div class = "container my-container">
   <div class = "col-lg-12 my-form">
     <h1>Teams</h1>
+    <br>
+    <div>
+      <button id = "setvisibleaddcomment" name = "setvisibleaddcomment" class = "btn btn-primary " color = "primary"
+              (click) = "setvisibleaddteam()">{{registration ? 'Cancel' : 'Create new Team'}}
+      </button>
+    </div>
+    <div *ngIf = "registration">
+      <form class = "form-horizontal">
+        <fieldset>
+
+          <!-- Form Name -->
+          <legend>Team registration</legend>
+
+          <!-- Text input-->
+          <div class = "form-group">
+            <label class = "col-md-4 control-label" for = "name">Team Name</label>
+            <div class = "col-md-4">
+              <input #name id = "name" name = "name" type = "text" placeholder = "" class = "form-control input-md"
+                     required = "">
+
+            </div>
+          </div>
+
+          <div class = "form-group">
+            <label class = "col-md-4 control-label" for = "registration"></label>
+            <div class = "col-md-4">
+              <button id = "registration" name = "registration" class = "btn btn-primary" mat-flat-button
+                      color = "primary" (click) = "registerTeam(name.value)">Team registration
+              </button>
+            </div>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+    <br>
     <div class = "mat-elevation-z8">
       <table mat-table [dataSource] = "dataSource">
 
@@ -29,41 +64,6 @@
         <tr mat-row *matRowDef = "let row; columns: displayedColumns;"></tr>
       </table>
     </div>
-    <br>
-    <div>
-      <button id = "setvisibleaddcomment" name = "setvisibleaddcomment" class = "btn btn-primary "
-              color = "primary"
-              (click) = "setvisibleaddteam()">{{registration ? 'Cancel' : 'Create new Team'}}
-      </button>
-    </div>
-    <div *ngIf = "registration">
-      <form class = "form-horizontal">
-        <fieldset>
 
-          <!-- Form Name -->
-          <legend>Team registration</legend>
-
-          <!-- Text input-->
-          <div class = "form-group">
-            <label class = "col-md-4 control-label" for = "name">Team Name</label>
-            <div class = "col-md-4">
-              <input #name id = "name" name = "name" type = "text" placeholder = "" class = "form-control input-md"
-                     required = "">
-
-            </div>
-          </div>
-
-          <div class = "form-group">
-            <label class = "col-md-4 control-label" for = "registration"></label>
-            <div class = "col-md-4">
-              <button id = "registration" name = "registration" class = "btn btn-primary" mat-flat-button
-                      color = "primary"
-                      (click) = "registerTeam(name.value)">Team registration
-              </button>
-            </div>
-          </div>
-        </fieldset>
-      </form>
-    </div>
   </div>
 </div>

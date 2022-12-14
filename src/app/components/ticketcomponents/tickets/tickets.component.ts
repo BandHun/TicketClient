@@ -25,7 +25,7 @@ export class TicketsComponent implements OnInit {
   }
 
   editTicket(ticket: Ticket): void {
-    this.router.navigate(['ticketdetails/' + ticket.id, {ticket: JSON.stringify(ticket)}]);
+    this.router.navigate(['ticketdetails/' + ticket.id]);
   }
 
   deleteTicket(ticketId: number): void {
