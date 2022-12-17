@@ -22,8 +22,8 @@
       <br>
       <label>Assignee filters</label>
       <div *ngFor = "let user of users">
-        <button mat-raised-button color = "primary"
-                style = "margin-bottom:10px; margin-top: 10px">{{ user.name }}</button>
+        <button mat-raised-button color = "primary" style = "margin-bottom:10px; margin-top: 10px"
+                (click) = "filterTickets(user)">{{ user.name }}</button>
       </div>
       <br>
       <div class = "board-wrapper">

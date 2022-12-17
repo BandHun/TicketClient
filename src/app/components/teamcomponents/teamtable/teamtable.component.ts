@@ -55,7 +55,8 @@ export class TeamtableComponent implements OnInit {
   filter(user: User) {
     let dataSource = new MatTableDataSource<Ticket>();
     for (let i = 0; i < this.dataTostore.data.length; i++) {
-      if (this.dataTostore.data[i].assignee.id === user.id) {
+      let assignee = this.dataTostore.data[i].assignee
+      if (assignee != null && assignee.id === user.id) {
         dataSource.data.push(this.dataTostore.data[i]);
       }
     }

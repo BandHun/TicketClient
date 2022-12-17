@@ -70,10 +70,12 @@ export class TicketregistrationComponent implements OnInit {
       if (this.file != null) {
         this.documentService.uploadDocumentToTicket(ticket.id, this.file).subscribe();
       }
-      this.ticketService.addToSprint(ticket.id, this.ticket.sprint).subscribe(() => {
-        this.router.navigate(['tickets']);
-        NotificationsComponent.notification("Ticket created");
-      });
+      if (ticket.sprint != null) {
+        this.ticketService.addToSprint(ticket.id, this.ticket.sprint).subscribe(() => {
+          this.router.navigate(['tickets']);
+          NotificationsComponent.notification("Ticket created");
+        });
+      }
     });
   }
 

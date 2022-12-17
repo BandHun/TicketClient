@@ -26,12 +26,12 @@ export class HourtableComponent implements OnInit {
   ngOnInit(): void {
 
     this.numbers = [...Array(7).keys()]
-    let defHours = new Array()
-    for (let i = 0; i < this.numbers.length; i++) {
-      defHours.push(0)
-    }
     this.userService.getAtMyCompany().subscribe(users => {
       for (let i = 0; i < users.length; i++) {
+        let defHours = new Array()
+        for (let i = 0; i < this.numbers.length; i++) {
+          defHours.push(0)
+        }
         this.dataSource.data.push(new UserWithHours(users[i], defHours));
         this.dataSource._updateChangeSubscription();
       }
@@ -54,7 +54,6 @@ export class HourtableComponent implements OnInit {
       for (let j = 0; j < this.numbers.length; j++) {
         var nextDay = new Date(this.startDate)
         nextDay.setDate(nextDay.getDate() + j);
-        let a;
         this.hourService.getRecordsForUserInDay(this.dataSource.data[i].user.id, nextDay).subscribe(data => {
           this.dataSource.data[i].hours[j] = data;
           this.dataSource._updateChangeSubscription();
