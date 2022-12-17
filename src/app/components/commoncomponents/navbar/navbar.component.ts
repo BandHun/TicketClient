@@ -3,6 +3,8 @@ import {menuList} from './menu-list';
 import {NavigationEnd, Router} from "@angular/router";
 import {filter} from "rxjs";
 import {User, UserLevel} from "../../../../models/User";
+import {GlobalVariablesAndFunctions} from 'src/app/GlobalVariablesAndFunctions';
+import {UserService} from 'src/app/services/user/user.service';
 
 @Component({
   selector: 'app-navbar', templateUrl: './navbar.component.html', styleUrls: ['./navbar.component.css']
@@ -14,12 +16,13 @@ export class NavbarComponent implements OnInit {
   showHeader = false;
   user: User;
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private userService: UserService) {
     this.router.events.pipe(filter(e => e instanceof NavigationEnd)).subscribe(event => this.modifyHeader(event));
   }
 
   ngOnInit(): void {
-    this.user = JSON.parse(localStorage.getItem('currentuser'))
+    GlobalVariablesAndFunctions.refreshCurrentUser(this.userService).then(
+      () => this.user = GlobalVariablesAndFunctions.currentUser);
   }
 
   hideSidebar() {
@@ -35,6 +38,10 @@ export class NavbarComponent implements OnInit {
   }
 
   foradmin(b: boolean) {
+    if (this.user == null) {
+      return true;
+    }
+    console.log(this.user.userLevel)
     if (b) {
       if (this.user.userLevel === UserLevel.ADMIN) {
         return true

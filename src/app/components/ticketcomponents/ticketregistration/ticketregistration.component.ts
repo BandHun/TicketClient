@@ -78,17 +78,17 @@ export class TicketregistrationComponent implements OnInit {
   }
 
   teamchanged() {
-    console.log(this.ticket.team)
+    console.log(this.ticket.teams)
     this.ticket.sprint = null;
-    if (this.ticket.team.teamsTable != null) {
-      this.sprints = this.ticket.team.teamsTable.sprints;
+    if (this.ticket.teams.teamsTable != null) {
+      this.sprints = this.ticket.teams.teamsTable.sprints;
     } else {
       this.sprints = null;
     }
     this.ticket.assignee = null;
 
     this.teamnotnull = true;
-    this.teamservice.getUsers(this.ticket.team.id).subscribe(users => {
+    this.teamservice.getUsers(this.ticket.teams.id).subscribe(users => {
       this.users = users
     })
   }

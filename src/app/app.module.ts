@@ -59,11 +59,13 @@ import {
   TicketBoardComponentComponent
 } from './components/ticketcomponents/ticket-board-component/ticket-board-component.component';
 import {MatCardModule} from "@angular/material/card";
+import {MatRadioModule} from "@angular/material/radio";
+import { ChangepasswordComponent } from './components/commoncomponents/changepassword/changepassword.component';
 
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, HomeComponent, HeaderComponent, NavbarComponent, TicketsComponent, UpdateticketsComponent, RegistrationComponent, CompanyregistrationComponent, TeamsregistrationComponent, TeamseditComponent, TicketregistrationComponent, TicketeditComponent, ProfileComponent, TicketdetailsComponent, NotificationsComponent, ProjectsComponent, ProjectdetailsComponent, JoinrequestComponent, UsersComponent, TeamtableComponent, SprintsComponent, SprinteditComponent, UsereditComponent, TeamtablesComponent, ForgetpswComponent, CommentComponent, TestComponent, HourtableComponent, TicketboardComponent, TicketBoardComponentComponent,],
-  imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule, MatButtonModule, MatToolbarModule, MatFormFieldModule, ReactiveFormsModule, FormsModule, MatInputModule, MatOptionModule, MatSelectModule, BrowserAnimationsModule, MatTableModule, MatPaginatorModule, MatDatepickerModule, MatTabsModule, MatSidenavModule, MatIconModule, MatTooltipModule, MatDatepickerModule, MatButtonModule, MatFormFieldModule, MatNativeDateModule, DragDropModule, MatCardModule,],
+  declarations: [AppComponent, LoginComponent, HomeComponent, HeaderComponent, NavbarComponent, TicketsComponent, UpdateticketsComponent, RegistrationComponent, CompanyregistrationComponent, TeamsregistrationComponent, TeamseditComponent, TicketregistrationComponent, TicketeditComponent, ProfileComponent, TicketdetailsComponent, NotificationsComponent, ProjectsComponent, ProjectdetailsComponent, JoinrequestComponent, UsersComponent, TeamtableComponent, SprintsComponent, SprinteditComponent, UsereditComponent, TeamtablesComponent, ForgetpswComponent, CommentComponent, TestComponent, HourtableComponent, TicketboardComponent, TicketBoardComponentComponent, ChangepasswordComponent,],
+  imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule, MatButtonModule, MatToolbarModule, MatFormFieldModule, ReactiveFormsModule, FormsModule, MatInputModule, MatOptionModule, MatSelectModule, BrowserAnimationsModule, MatTableModule, MatPaginatorModule, MatDatepickerModule, MatTabsModule, MatSidenavModule, MatIconModule, MatTooltipModule, MatDatepickerModule, MatButtonModule, MatFormFieldModule, MatNativeDateModule, DragDropModule, MatCardModule, MatRadioModule,],
   providers: [LoginService, {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptorService, multi: true}],
   bootstrap: [AppComponent]
 })

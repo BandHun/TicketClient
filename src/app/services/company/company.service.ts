@@ -27,4 +27,21 @@ export class CompanyService {
   public sendJoinRequest(id: number) {
     return this.http.post<JoinCompanyRequest>(environment.apiBaseUrl + "/company/joinrequest/create", id);
   }
+
+  public getJoinRequests() {
+    return this.http.get<Array<JoinCompanyRequest>>(environment.apiBaseUrl + "/company/joinrequest/getbyuser");
+  }
+
+  public getJoinRequestsbycompany() {
+    return this.http.get<Array<JoinCompanyRequest>>(environment.apiBaseUrl + "/company/joinrequest/getbycompany");
+  }
+
+  public acceptJoinRequests(request: JoinCompanyRequest) {
+    return this.http.post<JoinCompanyRequest>(environment.apiBaseUrl + "/company/joinrequest/accept", request);
+  }
+
+
+  public declineJoinRequests(request: JoinCompanyRequest) {
+    return this.http.post<JoinCompanyRequest>(environment.apiBaseUrl + "/company/joinrequest/decline", request);
+  }
 }

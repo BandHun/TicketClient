@@ -42,7 +42,7 @@
       <div class = "form-group">
         <label class = "col-md-12 control-label" for = "assignee">Select Team</label>
         <div class = "col-md-12">
-          <select [(ngModel)] = "ticket.team" id = "team" class = "form-control" (change) = "teamchanged()">
+          <select [(ngModel)] = "ticket.teams" id = "team" class = "form-control" (change) = "teamchanged()">
             <option *ngFor = "let team of teams" [ngValue] = "team">
               {{team.name}}
             </option>

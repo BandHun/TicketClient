@@ -23,8 +23,7 @@ import {DocumentService} from "../../../services/document/document.service";
 })
 export class TicketdetailsComponent implements OnInit {
 
-  // @ts-ignore
-  ticket: Ticket;
+  ticket: Ticket = null;
   addcommentvisible: boolean = false;
   addhourvisible: boolean = false;
   commentem: Comment;
@@ -54,10 +53,11 @@ export class TicketdetailsComponent implements OnInit {
     }
     this.documentService.getDocumentToTicket(this.route.snapshot.params['id']).subscribe(documents => {
       this.documents = documents;
-      console.log(documents.length)
     })
     this.ticketService.getTicketsById(this.route.snapshot.params['id']).subscribe(ticket => {
       this.ticket = ticket
+      this.ticketService.getTicketsSprint(this.ticket.id).subscribe(sprint => this.ticket.sprint = sprint);
+      this.ticketService.getTicketsTeams(this.ticket.id).subscribe(teams => this.ticket.teams = teams);
       this.ticket.comments.forEach(comment => {
         // @ts-ignore
         this.comments.push(comment);
@@ -66,6 +66,8 @@ export class TicketdetailsComponent implements OnInit {
         hours.forEach(loggedhour => this.loggedhours.data.push(loggedhour));
         this.loggedhours._updateChangeSubscription();
       })
+      this.hourrecordService.getSummRecordsForTicket(this.ticket.id).subscribe(
+        summ => this.ticket.usedStroyPoints = summ)
     });
   }
 
@@ -103,9 +105,11 @@ export class TicketdetailsComponent implements OnInit {
 
   edit(): void {
     this.projectsService.getAllProjects().subscribe(allproject => {
-      console.log("Projects")
-      console.log(allproject)
-      this.router.navigate(['ticketedit/' + this.ticket.id, {projects: JSON.stringify(allproject)}]);
+      this.teamsService.getTeamsByCompany().subscribe(teams => {
+        this.router.navigate(
+          ['ticketedit/' + this.ticket.id, {projects: JSON.stringify(allproject), teams: JSON.stringify(teams)}]);
+      })
+
     });
 
   }
@@ -135,8 +139,27 @@ export class TicketdetailsComponent implements OnInit {
     });
   }
 
+  download(doc: Document) {
+    this.documentService.downloadFile(doc.id).subscribe(resp => {
+      const a = document.createElement('a')
+      const objectUrl = URL.createObjectURL(resp)
+      a.href = objectUrl
+      a.download = doc.documentName;
+      a.click();
+      URL.revokeObjectURL(objectUrl);
+    })
+  }
+
   public trackItem(index: number, item: Comment) {
     return item.id;
+  }
+
+  sprintToString() {
+    if (this.ticket != null) {
+      return this.ticket.sprint.startDate + "-" + this.ticket.sprint.endDate;
+    } else {
+      return ""
+    }
   }
 
 }

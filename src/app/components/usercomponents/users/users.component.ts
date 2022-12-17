@@ -36,7 +36,15 @@ export class UsersComponent implements OnInit {
     this.router.navigate(['/profile/' + user.id]);
   }
 
+  toEditAsAdmin(user: User) {
+    this.router.navigate(['/useredit/' + user.id]);
+  }
+
   setAdmin(user: User) {
     this.userService.setAdmin(user).subscribe(user => NotificationsComponent.notification("Set Admin successfully"))
+  }
+
+  goJoinRequests() {
+    this.router.navigate(['/joinrequest']);
   }
 }

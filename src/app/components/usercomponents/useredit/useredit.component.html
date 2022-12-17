@@ -1,46 +1,79 @@
 <div class = "container my-container">
   <div class = "col-lg-12 my-form">
     <h1>Edit User</h1>
-    <form>
+    <form [formGroup] = "editForm" (ngSubmit) = "save()">
 
 
       <!-- Name -->
-      <div class = "form-group">
-        <label class = "col-md-8 control-label" for = "name">Name</label>
-        <div class = "col-md-8">
-          <input [(ngModel)] = "user.name" id = "name" name = "name" type = "text" placeholder = ""
-                 class = "form-control input-md" required = "" value = "{{user.name}}">
+      <div *ngIf = "iscurrentUser(); else name">
+        <div class = "form-group">
+          <label class = "col-md-8 control-label" for = "name">Name</label>
+          <div class = "col-md-8">
+            <input formControlName = "name" id = "name" name = "name" type = "text" placeholder = ""
+                   class = "form-control input-md" required = "" value = "{{user.name}}">
+          </div>
         </div>
       </div>
+      <ng-template #name>
+        <label>Name: {{user.name}}</label>
+      </ng-template>
+
 
       <!-- Email -->
-      <div class = "form-group">
-        <label class = "col-md-8 control-label" for = "emailaddress">Email address</label>
-        <div class = "col-md-8">
-          <input [(ngModel)] = "user.emailaddress" id = "emailaddress" name = "emailaddress" type = "text"
-                 placeholder = "" class = "form-control input-md" required = "" value = "{{user.emailaddress}}">
+      <div *ngIf = "iscurrentUser(); else email">
+        <div class = "form-group">
+          <label class = "col-md-8 control-label" for = "emailaddress">Email address</label>
+          <div class = "col-md-8">
+            <input formControlName = "emailaddress" id = "emailaddress" name = "emailaddress" type = "text"
+                   placeholder = "" class = "form-control input-md" required = "" value = "{{user.emailaddress}}">
+          </div>
         </div>
       </div>
+      <ng-template #email>
+        <label>Name: {{user.name}}</label>
+      </ng-template>
+
 
       <!-- Company -->
-      <h3>Company: {{user.company == null ? '' : user.company.name}}</h3>
-      <button id = "registration" name = "registration" class = "btn btn-danger" mat-flat-button
-              (click) = "leaveCompany()">Leave Company
-      </button>
+      <div class = "form-group">
+        <div *ngIf = "user.company!=null">
+          <label class = "col-md-8 control-label" for = "company">Company: {{user.company.name}}</label>
+          <input hidden formControlName = "company" id = "company" name = "company" type = "text" placeholder = ""
+                 [attr.disabled] = "true" class = "form-control input-md" required = "" value = "{{user.company}}">
+          <div *ngIf = "iscurrentUser(); else admin">
+            <button class = "btn btn-danger" mat-flat-button (click) = "leaveCompany()">Leave Company
+            </button>
+          </div>
+          <ng-template #admin>
+            <button class = "btn btn-danger" mat-flat-button (click) = "leaveCompany()">Kick from Company
+            </button>
+          </ng-template>
+        </div>
+      </div>
 
       <!-- Team -->
       <div class = "form-group">
         <label class = "col-md-8 control-label" for = "teams">Team</label>
         <div class = "col-md-8">
-          <select [(ngModel)] = "user.teams" id = "teams" class = "form-control">
-            <option *ngFor = "let team of teams" [ngValue] = "team" selected = "{{user.teams == team?'selected':''}}">
+          <select formControlName = "teams" id = "teams" class = "form-control">
+            <option *ngFor = "let team of teams" [value] = "team.id">
               {{team.name}}
             </option>
           </select>
         </div>
       </div>
-      <button type = "submit" name = "registration" class = "btn btn-primary" mat-flat-button color = "primary"
-              (click) = "save()">
+
+      <div class = "form-group">
+        <label class = "col-md-8 control-label" for = "userlevel">User Level</label>
+        <div class = "col-md-8">
+          <select formControlName = "userlevel" id = "userlevel" name = "userlevel" class = "form-control">
+            <option *ngFor = "let userlevel of userlevels" [ngValue] = "userlevel">
+              {{ userlevel }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <button type = "submit" name = "registration" class = "btn btn-primary" mat-flat-button color = "primary">
         Save changes
       </button>
     </form>

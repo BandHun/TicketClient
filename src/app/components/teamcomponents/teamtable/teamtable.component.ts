@@ -62,4 +62,12 @@ export class TeamtableComponent implements OnInit {
     this.dataSource = dataSource;
     this.dataSource._updateChangeSubscription();
   }
+
+  setvisibleaddteam() {
+    this.router.navigate(['/sprintcreate/' + this.teamtableid])
+  }
+
+  todetails(id: number) {
+    this.router.navigate(['/ticketdetails/' + id])
+  }
 }

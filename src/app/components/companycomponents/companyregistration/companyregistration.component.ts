@@ -6,6 +6,7 @@ import {Router} from "@angular/router";
 import {NotificationsComponent} from "../../commoncomponents/notifications/notifications.component";
 import {MatTableDataSource} from "@angular/material/table";
 import {User} from 'src/models/User';
+import {JoinCompanyRequest} from "../../../../models/JoinCompanyRequest";
 
 @Component({
   selector: 'app-companyregistration',
@@ -15,10 +16,12 @@ import {User} from 'src/models/User';
 export class CompanyregistrationComponent implements OnInit {
 
   companyi: Company;
+  registration = false
 
-  displayedColumns: string[] = ['id', 'name', 'actions'];
+  displayedColumns: string[] = ['name', 'actions'];
   companies = new MatTableDataSource<Company>();
   user: User;
+  joinRequests = new Array<JoinCompanyRequest>();
 
   constructor(private companyService: CompanyService, private userService: UserService, private router: Router) {
   }
@@ -28,6 +31,7 @@ export class CompanyregistrationComponent implements OnInit {
       companies.forEach(company => this.companies.data.push(company));
       this.companies._updateChangeSubscription();
     });
+    this.companyService.getJoinRequests().subscribe(requests => this.joinRequests = requests)
   }
 
 
@@ -38,7 +42,7 @@ export class CompanyregistrationComponent implements OnInit {
     });
   }
 
-  join(companyId: number) {
+  /*join(companyId: number) {
     this.user = JSON.parse(localStorage.getItem('currentuser'));
     if (this.user.company != null) {
       NotificationsComponent.notification("You already have a company! Leave befor join an otherone!");
@@ -48,14 +52,40 @@ export class CompanyregistrationComponent implements OnInit {
       NotificationsComponent.notification("Joined company successfully");
       this.router.navigate(['/home']);
     })
-  }
+  }/**/
 
-  /*sendJoinRequest(companyId: number): void {
+  sendJoinRequest(companyId: number): void {
     this.companyService.sendJoinRequest(companyId).subscribe(res => {
-      console.log(res)
-      console.log("Siker")
+      this.joinRequests.push(res);
       NotificationsComponent.notification("Join request sended successfully");
     });
-  }*/
+  }
+
+  isRequested(company: Company) {
+    let ret = false;
+    // @ts-ignore
+    this.joinRequests.forEach(request => {
+      if (request.company.id == company.id) {
+        ret = true
+      }
+    })
+    return ret;
+  }
+
+  requestStatus(company: Company) {
+    let toret = ""
+    // @ts-ignore
+    this.joinRequests.forEach(request => {
+      if (request.company.id == company.id) {
+        console.log(request.requestStatus)
+        toret = request.requestStatus
+      }
+    })
+    return toret;
+  }
+
+  setvisibleaddteam() {
+    this.registration = !this.registration;
+  }
 
 }

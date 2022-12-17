@@ -1,1 +1,6 @@
-<p>{{ticket.title}}</p>
+<div (dblclick) = "toTicketDetails()" class = "cardstyle"
+     style = "margin-top: 2px;margin-left: 10px;margin-bottom: 10px">
+  <p>Title: {{ticket.title}}</p>
+  <p *ngIf = "ticket.assignee!=null">Assignee: {{ticket.assignee.name}}</p>
+  <p *ngIf = "ticket.usedStroyPoints!=null">Worked hours: {{ticket.usedStroyPoints}}</p>
+</div>

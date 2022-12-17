@@ -1,0 +1,15 @@
+.mat-column-title {
+  width: 20%;
+}
+
+.mat-column-assignee {
+  width: 20%;
+}
+
+.mat-column-status {
+  width: 20%;
+}
+
+.mat-column-actions {
+  width: 40%;
+}

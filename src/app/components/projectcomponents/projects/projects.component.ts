@@ -3,6 +3,8 @@ import {MatTableDataSource} from "@angular/material/table";
 import {Router} from "@angular/router";
 import {ProjectsService} from "../../../services/projects/projects.service";
 import {Project} from "../../../../models/Project";
+import {User, UserLevel} from "../../../../models/User";
+import {GlobalVariablesAndFunctions} from "../../../GlobalVariablesAndFunctions";
 
 @Component({
   selector: 'app-projects', templateUrl: './projects.component.html', styleUrls: ['./projects.component.css']
@@ -11,11 +13,14 @@ export class ProjectsComponent implements OnInit {
 
   displayedColumns: string[] = ['name', 'actions'];
   dataSource = new MatTableDataSource<Project>();
+  registration = false;
+  user: User
 
   constructor(private projectsService: ProjectsService, private router: Router) {
   }
 
   ngOnInit(): void {
+    this.user = GlobalVariablesAndFunctions.currentUser;
     this.projectsService.getAllProjects().subscribe(projects => {
       projects.forEach(project => this.dataSource.data.push(project));
       this.dataSource._updateChangeSubscription();
@@ -39,5 +44,17 @@ export class ProjectsComponent implements OnInit {
       this.dataSource._updateChangeSubscription();
     });
   }
+
+  setvisibleaddteam() {
+    this.registration = !this.registration;
+  }
+
+  isAdmin(): boolean {
+    if (this.user == null) {
+      return false;
+    }
+    return this.user.userLevel == UserLevel.ADMIN;
+  }
+
 
 }

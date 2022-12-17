@@ -13,6 +13,7 @@ import {NotificationsComponent} from "../../commoncomponents/notifications/notif
 import {Teams} from "../../../../models/Teams";
 import {Sprint} from "../../../../models/Sprint";
 import {DocumentService} from "../../../services/document/document.service";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-ticketedit', templateUrl: './ticketedit.component.html', styleUrls: ['./ticketedit.component.css']
@@ -21,6 +22,8 @@ export class TicketeditComponent implements OnInit {
 
   projects = Array<Project>();
   selectedProject: Project = null;
+
+  editform: FormGroup;
 
   ticket: Ticket;
   ticketToStor: Ticket
@@ -36,25 +39,19 @@ export class TicketeditComponent implements OnInit {
   file: any;
   selectedFiles: FileList;
 
+  Ttitle: String = ""
+  Tproject: Project = null;
 
-  constructor(private projectsService: ProjectsService, private documentService: DocumentService,
-              private teamService: TeamsService, private route: ActivatedRoute, private ticketService: TicketService,
-              private teamsService: TeamsService, private userService: UserService, private router: Router) {
+
+  constructor(private formBuilder: FormBuilder, private projectsService: ProjectsService,
+              private documentService: DocumentService, private teamService: TeamsService,
+              private route: ActivatedRoute, private ticketService: TicketService, private teamsService: TeamsService,
+              private userService: UserService, private router: Router) {
     this.projects = JSON.parse(this.route.snapshot.params['projects']);
+    this.teams = JSON.parse(this.route.snapshot.params['teams']);
   }
 
-  async ngOnInit() {
-    /*this.projectsService.getAllProjects().subscribe(allproject => {
-      allproject.forEach(proj => this.projects.push(proj));
-      this.isTicketReady()
-    });*/
-    this.teamService.getTeamsByCompany().subscribe(teams => this.teams = teams);
-    this.teamService.getsprints(Number(this.route.snapshot.params['id'])).subscribe(sprints => {
-      this.sprints = sprints;
-      this.isTicketReady()
-    }, (err) => {
-      this.sprints = null
-    })
+  ngOnInit() {
     this.userService.getAtMyCompany().subscribe(users => {
       users.forEach(user => {
         this.users.push(user);
@@ -64,7 +61,16 @@ export class TicketeditComponent implements OnInit {
     this.route.params.subscribe(
       params => this.ticketService.getTicketsById(Number(this.route.snapshot.params['id'])).subscribe(ticket => {
         this.ticketToStor = ticket;
-        this.isTicketReady()
+        console.log(ticket)
+        this.isTicketReady();
+        if (ticket.teams != null) {
+          this.teamService.getsprints(ticket.teams.id).subscribe(sprints => {
+            this.sprints = sprints;
+            this.isTicketReady()
+          }, (err) => {
+            this.sprints = null
+          })
+        }
       }));
     for (var status in TicketStatus) {
       this.statuses.push(status);
@@ -75,22 +81,64 @@ export class TicketeditComponent implements OnInit {
     if (this.ticketToStor != null) {
       if (this.users != null && this.users.length != 0) {
         if (this.projects != null && this.projects.length != 0) {
-          if (this.sprints != null && this.sprints.length != 0) {
-            this.ticket = this.ticketToStor
-            this.selectedProject = this.ticket.project;
-            console.log(this.selectedProject)
-          }
+          this.ticket = this.ticketToStor
+          this.Ttitle = this.ticket.title
+          this.Tproject = this.ticket.project
+          this.selectedProject = this.ticket.project;
+          this.editform = this.formBuilder.group({
+            title: [this.ticket.title, Validators.required],
+            storyPoints: [this.ticket.storyPoints, Validators.required],
+            description: [this.ticket.description, Validators.required],
+            project: [this.ticket.project, Validators.required], //team: [this.ticket.team, Validators.required],
+            sprint: [this.ticket.sprint, Validators.required],
+            assignee: [this.ticket.assignee, Validators.required],
+            status: [this.ticket.status, Validators.required],
+          });
         }
       }
     }
   }
 
-  save2() {
-    this.documentService.uploadDocumentToTicket(this.ticket.id, this.selectedFiles[0]).subscribe(
-      () => NotificationsComponent.notification("JO"))
+  onSubmit() {
+    this.ticketService.save(this.ticket.id, this.ticket).subscribe(ticket => {
+      if (this.ticket.teams != null) {
+        this.ticketService.addToTeam(this.ticket.id, this.ticket.teams).subscribe(ticket => {
+          console.log("team added")
+        })
+      }
+      if (this.ticket.sprint != null) {
+        this.ticketService.addToSprint(this.ticket.id, this.ticket.sprint).subscribe(ticket => {
+          console.log("sprint added")
+        })
+      }
+      if (this.ticket.project != null) {
+        this.ticketService.addToProject(this.ticket.project.id, this.ticket.id).subscribe(() => {
+          console.log("project added")
+        })
+      }
+      if (this.ticket.assignee != null) {
+        this.ticketService.assigneto(this.ticket.assignee.id, this.ticket.id).subscribe(() => {
+          console.log("assignee added")
+        })
+      }
+      if (this.selectedFiles != undefined) {
+        this.documentService.uploadDocumentToTicket(this.ticket.id, this.selectedFiles[0]).subscribe(() => {
+        })
+      }
+      this.ticket = ticket;
+      this.router.navigate(['tickets']);
+      NotificationsComponent.notification("Ticket updated");
+    }, (err) => {
+      NotificationsComponent.notification(err);
+    });/**/
   }
 
-  save(): void {
+  save2() {
+    this.documentService.uploadDocumentToTicket(this.ticket.id, this.selectedFiles[0]).subscribe(() => {
+    })
+  }
+
+  /*save(): void {
     this.ticketService.save(this.ticket).subscribe(ticket => {
       this.ticket = ticket;
       this.documentService.uploadDocumentToTicket(this.ticket.id, this.selectedFiles[0]).subscribe(
@@ -99,19 +147,19 @@ export class TicketeditComponent implements OnInit {
       this.router.navigate(['tickets']);
       NotificationsComponent.notification("Ticket updated");
     }, (err) => {
-      console.log(err);
       NotificationsComponent.notification(err);
     });
-  }
+  }*/
 
-  teamchanged(): void {
-    this.ticket.assignee = null;
+  teamchanged(event: any): void {
     this.teamnotnull = true;
-    this.projects = [...this.projects]
-    this.teamService.getUsers(22).subscribe(users => {
+
+    this.teamService.getUsers(event.id).subscribe(users => {
       this.users = users
     })
-
+    this.teamService.getsprints(event.id).subscribe(sprints => {
+      this.sprints = sprints;
+    });/**/
   }
 
   selectFile(event: any) {

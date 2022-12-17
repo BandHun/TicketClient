@@ -17,6 +17,7 @@ export class TicketsComponent implements OnInit {
 
   ngOnInit(): void {
     this.ticketsService.getTicketsByCompany().subscribe(tickets => {
+      console.log(tickets)
       tickets.forEach(ticket => {
         this.dataSource.data.push(ticket);
       });
@@ -33,5 +34,11 @@ export class TicketsComponent implements OnInit {
       this.dataSource.data = this.dataSource.data.filter((data) => data.id !== ticketId);
       this.dataSource._updateChangeSubscription();
     });
+  }
+
+  applyFilter(filterValue: any) {
+    filterValue = filterValue.trim();
+    filterValue = filterValue.toLowerCase();
+    this.dataSource.filter = filterValue;
   }
 }

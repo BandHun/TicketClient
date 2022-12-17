@@ -1,20 +1,24 @@
 <div>
-  <textarea [(ngModel)] = "comment.commentMessage" cols = "62" rows = "3" disabled = "{{!editMode}}"></textarea>
+  <textarea [(ngModel)] = "comment.commentMessage" cols = "50" rows = "3" disabled = "{{!editMode}}"></textarea>
   <br>
   <div *ngIf = "comment.updateDateTime == comment.createDateTime; else elseBlock">
-    <label>Created: {{comment.createDateTime | date:'medium'}}</label>
+    <label>Created: {{comment.createDateTime | date:'medium'}} by {{comment.creator.name}}</label>
   </div>
   <ng-template #elseBlock>
     <label>Created: {{comment.createDateTime | date:'medium'}},
       Updated: {{comment.updateDateTime | date:'medium'}}</label>
   </ng-template>
-  <br>
   <div *ngIf = "editMode; else elseBlock2">
-    <button style = "margin-right:5px" (click) = "saveComment()">Save</button>
-    <button (click) = "cancelEdit()">Cancel</button>
+    <button mat-raised-button color = "primary" style = "margin-bottom:5px; margin-top: 5px;margin-right: 5px"
+            (click) = "saveComment()">Save
+    </button>
+    <button mat-raised-button color = "primary" style = "margin-bottom:5px; margin-top: 5px" (click) = "cancelEdit()">
+      Cancel
+    </button>
   </div>
   <ng-template #elseBlock2>
-    <button style = "margin-right:5px" *ngIf = "currentUser.id==comment.creator.id" (click) = "editComment()">Edit
+    <button mat-raised-button color = "primary" style = "margin-bottom:5px; margin-top: 5px"
+            *ngIf = "currentUser.id==comment.creator.id" (click) = "editComment()">Edit
     </button>
   </ng-template>
 

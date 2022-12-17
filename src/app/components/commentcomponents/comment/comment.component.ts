@@ -32,7 +32,8 @@ export class CommentComponent implements OnInit {
   }
 
   saveComment() {
-    this.commentService.updateComment(this.comment);
+    this.commentService.updateComment(this.comment).subscribe(() => {
+    });
     this.editMode = !this.editMode;
   }
 

@@ -1,5 +1,5 @@
-<div class = "container my-container">
-  <div class = "col-lg-12 my-form">
+<mat-card style = "height: 100%">
+  <div class = "col-lg-4">
     <h1>Team tables</h1>
     <div class = "mat-elevation-z8">
       <table mat-table [dataSource] = "dataSource">
@@ -11,10 +11,14 @@
 
         <ng-container matColumnDef = "actions">
           <div>
-            <th mat-header-cell *matHeaderCellDef> Actions</th>
+            <th mat-header-cell *matHeaderCellDef></th>
             <mat-cell *matCellDef = "let table">
-              <button (click) = "tableview(table.id)">Table view</button>
-              <button (click) = "listview(table.id)">List view</button>
+              <button (click) = "tableview(table.id)" mat-raised-button color = "primary"
+                      style = "margin-bottom:20px; margin-top: 20px; margin-right: 10px">Table view
+              </button>
+              <button (click) = "listview(table.id)" mat-raised-button color = "primary"
+                      style = "margin-bottom:20px; margin-top: 20px">List view
+              </button>
             </mat-cell>
           </div>
         </ng-container>
@@ -24,4 +28,4 @@
       </table>
     </div>
   </div>
-</div>
+</mat-card>

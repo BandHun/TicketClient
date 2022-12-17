@@ -1,90 +1,125 @@
-<div class = "my-container">
-  <div class = "col-md-8 my-form">
+<div class = "container my-container">
+  <div class = "col-lg-12 my-form">
     <form class = "form-horizontal">
       <fieldset>
 
         <!-- Form Name -->
         <legend>Ticket details</legend>
 
+        <br>
         <!-- Text input-->
         <div class = "form-group">
-          <label class = "col-md-4 control-label" for = "title">Title</label>
-          <div class = "col-md-4">
-            <input id = "title" name = "title" type = "text" class = "form-control input-md" disabled = "disabled"
-                   value = "{{ticket.title == null?'':ticket.title}}">
+          <div class = "col-md-8" style = "display: flex; flex-direction: row;">
+            <div style = "display: block;">
+              <label class = "col-md-4 control-label" for = "title">Title</label>
+              <input id = "title" name = "title" type = "text" class = "form-control input-md" disabled = "disabled"
+                     value = "{{ticket.title == null?'':ticket.title}}">
+            </div>
+            <div style = "display: block; margin-left: 50px">
+              <label class = "col-md-4 control-label" for = "description">Description</label>
+              <input id = "description" name = "description" type = "text" class = "form-control input-md"
+                     disabled = "disabled" value = "{{ticket.description}}">
+            </div>
+          </div>
+        </div>
+
+
+        <div class = "form-group">
+          <div class = "col-md-8" style = "display: flex; flex-direction: row;">
+            <div style = "display: block;">
+              <label class = "col-md-4 control-label" for = "storypoint">Storypoint</label>
+              <input id = "storypoint" name = "storypoint" type = "number" class = "form-control input-md"
+                     disabled = "disabled" value = "{{ticket.storyPoints}}">
+            </div>
+            <div style = "display: block; margin-left: 50px">
+              <label style = "white-space: nowrap;" class = "col-md-4 control-label" for = "usedstorypoints">Worked
+                hours
+              </label>
+              <input id = "usedstorypoints" name = "usedstorypoints" type = "number" class = "form-control input-md"
+                     disabled = "disabled" value = "{{ticket.usedStroyPoints}} + h">
+            </div>
+          </div>
+        </div>
+
+
+        <div class = "form-group">
+          <div class = "col-md-8" style = "display: flex; flex-direction: row;">
+            <div style = "display: block;">
+              <label class = "col-md-4 control-label" for = "status">Project</label>
+              <input id = "project" name = "project" type = "text" class = "form-control input-md" disabled = "disabled"
+                     value = "{{ticket.project == null?'':ticket.project.name}}">
+            </div>
+            <div style = "display: block; margin-left: 50px">
+              <label class = "col-md-4 control-label" for = "status">Status</label>
+              <input id = "status" name = "status" type = "text" class = "form-control input-md" disabled = "disabled"
+                     value = "{{ticket.status}}">
+            </div>
+          </div>
+        </div>
+
+
+        <div class = "form-group">
+          <div class = "col-md-8" style = "display: flex; flex-direction: row;">
+            <div style = "display: block;">
+              <label class = "col-md-4 control-label" for = "assignee">Assignee</label>
+              <input id = "assignee" name = "assignee" type = "text" class = "form-control input-md"
+                     disabled = "disabled" value = "{{ticket.assignee == null? '':ticket.assignee.name}}">
+            </div>
+            <div style = "display: block; margin-left: 50px">
+              <label class = "col-md-4 control-label" for = "author">Author</label>
+              <input id = "author" name = "author" type = "text" class = "form-control input-md" disabled = "disabled"
+                     value = "{{ticket.author == null? '':ticket.author.name}}">
+            </div>
           </div>
         </div>
 
         <div class = "form-group">
-          <label class = "col-md-4 control-label" for = "storypoint">Storypoint</label>
-          <div class = "col-md-4">
-            <input id = "storypoint" name = "storypoint" type = "number" class = "form-control input-md"
-                   disabled = "disabled" value = "{{ticket.storyPoints}}">
+          <div class = "col-md-8" style = "display: flex; flex-direction: row;">
+            <div style = "display: block; margin-left: 50px">
+              <label class = "col-md-8 control-label" for = "sprint">Sprint</label>
+              <input id = "sprint" name = "sprint" type = "text" class = "form-control input-md" disabled = "disabled"
+                     value = "{{ticket.sprint == null? '':sprintToString()}}">
+            </div>
           </div>
         </div>
 
-        <div class = "form-group">
-          <label class = "col-md-4 control-label" for = "description">Description</label>
-          <div class = "col-md-4">
-            <input id = "description" name = "description" type = "text" class = "form-control input-md"
-                   disabled = "disabled" value = "{{ticket.description}}">
+        <div *ngIf = "documents.length!=0" class = "form-group col-md-8">
+          <label class = "col-md-4 control-label" for = "status">Documents</label>
+          <div *ngFor = "let doc of documents">
+            <label class = "col-md-4 control-label" style = "margin-right: 20px">{{doc.documentName}}</label>
+            <button mat-raised-button color = "primary" style = "margin-bottom:20px; margin-top: 20px;"
+                    (click) = "download(doc)">Download
+            </button>
+            <button mat-raised-button style = "margin-bottom:20px; background: red; margin-top: 20px; margin-left: 20px"
+                    (click) = "deleteDocument(doc.id)">Delete
+            </button>
           </div>
         </div>
 
-        <div class = "form-group">
-          <label class = "col-md-4 control-label" for = "status">Project</label>
-          <div class = "col-md-4">
-            <input id = "project" name = "project" type = "text" class = "form-control input-md" disabled = "disabled"
-                   value = "{{ticket.project == null?'':ticket.project.name}}">
-          </div>
-        </div>
-
-        <div class = "form-group">
-          <label class = "col-md-4 control-label" for = "assignee">Assignee</label>
-          <div class = "col-md-4">
-            <input id = "assignee" name = "assignee" type = "text" class = "form-control input-md" disabled = "disabled"
-                   value = "{{ticket.assignee == null? '':ticket.assignee.name}}">
-          </div>
-        </div>
-
-        <div class = "form-group">
-          <label class = "col-md-4 control-label" for = "status">Status</label>
-          <div class = "col-md-4">
-            <input id = "status" name = "status" type = "text" class = "form-control input-md" disabled = "disabled"
-                   value = "{{ticket.status}}">
-          </div>
-        </div>
-        <label class = "col-md-4 control-label" for = "status">Documents</label>
-        <div *ngFor = "let doc of documents">
-          <label>{{doc.documentName}}</label>
-          <button (click) = "deleteDocument(doc.id)">Delete</button>
-        </div>
-
-
-        <button id = "edit" name = "edit" class = "btn btn-primary " color = "primary" (click) = "edit()">Edit
+        <button id = "edit" name = "edit" mat-raised-button color = "primary"
+                style = "margin-bottom:20px; margin-top: 20px; margin-left: 20px" (click) = "edit()">Edit
         </button>
       </fieldset>
     </form>
     <br>
     <br>
-    <br>
     <div class = "my-form">
       <mat-tab-group>
-        <mat-tab label = "Comments">
+        <mat-tab color = "white" label = "Comments">
           <br>
           <div class = "col-md-4">
-            <button id = "setvisibleaddcomment" name = "setvisibleaddcomment" class = "btn btn-primary "
-                    color = "primary"
+            <button id = "setvisibleaddcomment" name = "setvisibleaddcomment" mat-raised-button color = "primary"
+                    style = "margin-bottom:20px; margin-top: 20px"
                     (click) = "setvisibleaddcomment()">{{addcommentvisible ? 'Cancel' : 'Add comment'}}
             </button>
           </div>
           <ng-container *ngIf = "addcommentvisible">
-            <h4>Add comment</h4>
+            <h3>Add comment</h3>
 
             <div class = "form-group">
-              <label class = "col-md-4 control-label" for = "description">Description</label>
-              <div class = "col-md-4">
-                <textarea #comment class = "form-control" id = "comment" name = "comment"></textarea>
+              <div class = "col-md-8">
+                <textarea #comment class = "form-control" id = "comment" name = "comment"
+                          placeholder = "Description"></textarea>
               </div>
             </div>
 
@@ -94,57 +129,43 @@
               </button>
             </div>
           </ng-container>
-
-          <ng-container *ngIf = "editcommentvisible">
-            <h4>Edit comment</h4>
-
-            <div class = "form-group">
-              <label class = "col-md-4 control-label" for = "description">Description</label>
-              <div class = "col-md-4">
-                <textarea [(ngModel)] = "commentem.commentMessage" [value] = "commentmessage" class = "form-control"
-                          id = "comment2"></textarea>
-              </div>
-            </div>
-
-            <div class = "col-md-4">
-              <button id = "editcomment" name = "registration" class = "btn btn-primary" mat-flat-button
-                      color = "primary" (click) = "updateComment()">Update comment
-              </button>
-            </div>
-          </ng-container>
           <br>
           <div *ngFor = "let c of comments; trackBy: trackItem">
             <app-comment [comment] = "c"></app-comment>
-            <button (click) = "deleteComment(c)">Delete</button>
+            <button mat-raised-button style = "margin-bottom:20px; background:red;margin-top: 20px"
+                    (click) = "deleteComment(c)">Delete
+            </button>
           </div>
 
         </mat-tab>
         <mat-tab label = "Logged hours">
           <br>
           <div class = "col-md-4">
-            <button id = "setvisibleaddhour" name = "setvisibleaddhour" class = "btn btn-primary" mat-flat-button
-                    color = "primary" (click) = "setvisibleaddhour()">{{ addhourvisible ? 'Cancel' : 'Log time'}}
+            <button id = "setvisibleaddhour" name = "setvisibleaddhour" mat-raised-button color = "primary"
+                    style = "margin-bottom:5px; margin-top: 5px"
+                    (click) = "setvisibleaddhour()">{{ addhourvisible ? 'Cancel' : 'Log time'}}
             </button>
           </div>
 
           <ng-container *ngIf = "addhourvisible">
             <form>
-              <div class = "form-group">
+              <div>
                 <br>
                 <label class = "col-md-4 control-label" for = "logDate">Date to log:</label>
                 <br>
-                <input [(ngModel)] = "logDate" class = " col-md-4 form-control input-md" type = "date" id = "logDate"
-                       name = "logDate">
-
+                <div class = "col-md-12">
+                  <input [(ngModel)] = "logDate" class = " col-md-5 form-control input-md" type = "date" id = "logDate"
+                         name = "logDate">
+                </div>
                 <br>
                 <label class = "col-md-4 control-label" for = "storypoint">Hours to log</label>
-                <div class = "col-md-4">
+                <div class = "col-md-5">
                   <input #hours [(ngModel)] = "loghours" id = "hours" name = "hours" type = "number" placeholder = ""
                          class = "form-control input-md" required = "">
                 </div>
               </div>
-              <button id = "loghour" name = "loghour" class = "btn btn-primary" mat-flat-button color = "primary"
-                      (click) = "loghurs()">Log hours
+              <button id = "loghour" name = "loghour" mat-raised-button color = "primary"
+                      style = "margin-left:15px;margin-bottom:20px; margin-top: 20px" (click) = "loghurs()">Log hours
               </button>
             </form>
           </ng-container>
@@ -152,12 +173,12 @@
           <table mat-table [dataSource] = "loggedhours">
 
             <ng-container matColumnDef = "user">
-              <th mat-header-cell *matHeaderCellDef> Creator</th>
+              <th mat-header-cell *matHeaderCellDef>User</th>
               <td mat-cell *matCellDef = "let hour"> {{hour.user.name}} </td>
             </ng-container>
 
             <ng-container matColumnDef = "toDate">
-              <th mat-header-cell *matHeaderCellDef> Date</th>
+              <th mat-header-cell *matHeaderCellDef>Date</th>
               <td mat-cell *matCellDef = "let hour"> {{hour.toDate}} </td>
             </ng-container>
 

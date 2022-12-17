@@ -1,45 +1,53 @@
-<div class = "col-lg-12 my-form">
-  <h1>Tickets</h1>
-  <div class = "mat-elevation-z8">
-    <table mat-table [dataSource] = "dataSource">
+<mat-card style = "height: 100%">
+  <div class = "col-lg-12">
+    <h1>Tickets</h1>
+    <div class = "mat-elevation-z8">
 
-      <ng-container class = "samecolumwidth" matColumnDef = "title">
-        <th mat-header-cell *matHeaderCellDef> Title</th>
-        <td mat-cell *matCellDef = "let ticket"> {{ticket.title == null ? '' : ticket.title}} </td>
-      </ng-container>
+      <div style = "margin-left: 20px; margin-top: 20px; margin-bottom: 20px">
+        <mat-form-field>
+          <input matInput (keyup) = "applyFilter($any($event.target).value)" placeholder = "Search for ...">
+        </mat-form-field>
+      </div>
+      <table mat-table [dataSource] = "dataSource">
 
-      <ng-container class = "samecolumwidth" matColumnDef = "project">
-        <th mat-header-cell *matHeaderCellDef> Project</th>
-        <td mat-cell *matCellDef = "let ticket"> {{ticket.project == null ? '' : ticket.project.name}} </td>
-      </ng-container>
+        <ng-container class = "samecolumwidth" matColumnDef = "title">
+          <th mat-header-cell *matHeaderCellDef> Title</th>
+          <td mat-cell *matCellDef = "let ticket"> {{ticket.title == null ? '' : ticket.title}} </td>
+        </ng-container>
 
-      <ng-container class = "samecolumwidth" matColumnDef = "assignee">
-        <th mat-header-cell *matHeaderCellDef> Assignee</th>
-        <td mat-cell *matCellDef = "let ticket">{{ticket.assignee == null ? '' : ticket.assignee.name}}
-        </td>
-      </ng-container>
+        <ng-container class = "samecolumwidth" matColumnDef = "project">
+          <th mat-header-cell *matHeaderCellDef> Project</th>
+          <td mat-cell *matCellDef = "let ticket"> {{ticket.project == null ? '' : ticket.project.name}} </td>
+        </ng-container>
 
-      <ng-container class = "samecolumwidth" matColumnDef = "status">
-        <th mat-header-cell *matHeaderCellDef> Status</th>
-        <td mat-cell *matCellDef = "let ticket"> {{ticket.status}} </td>
-      </ng-container>
+        <ng-container class = "samecolumwidth" matColumnDef = "assignee">
+          <th mat-header-cell *matHeaderCellDef> Assignee</th>
+          <td mat-cell *matCellDef = "let ticket">{{ticket.assignee == null ? '' : ticket.assignee.name}}
+          </td>
+        </ng-container>
 
-      <ng-container class = "samecolumwidth" matColumnDef = "actions">
-        <th mat-header-cell *matHeaderCellDef></th>
-        <mat-cell *matCellDef = "let ticket">
-          <button mat-raised-button color = "primary"
-                  style = "margin-right:2px;margin-left:2px; margin-bottom:2px; margin-top: 2px"
-                  (click) = "editTicket(ticket)">Details
-          </button>
-          <button mat-raised-button
-                  style = "margin-right:2px;margin-left:2px; background:red;margin-bottom:2px; margin-top: 2px"
-                  (click) = "deleteTicket(ticket.id)">Delete
-          </button>
-        </mat-cell>
-      </ng-container>
+        <ng-container class = "samecolumwidth" matColumnDef = "status">
+          <th mat-header-cell *matHeaderCellDef> Status</th>
+          <td mat-cell *matCellDef = "let ticket"> {{ticket.status}} </td>
+        </ng-container>
 
-      <tr mat-header-row *matHeaderRowDef = "displayedColumns"></tr>
-      <tr mat-row *matRowDef = "let row; columns: displayedColumns;"></tr>
-    </table>
+        <ng-container class = "samecolumwidth" matColumnDef = "actions">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <mat-cell *matCellDef = "let ticket">
+            <button mat-raised-button color = "primary"
+                    style = "margin-right:2px;margin-left:2px; margin-bottom:2px; margin-top: 2px"
+                    (click) = "editTicket(ticket)">Details
+            </button>
+            <button mat-raised-button
+                    style = "margin-right:2px;margin-left:2px; background:red;margin-bottom:2px; margin-top: 2px"
+                    (click) = "deleteTicket(ticket.id)">Delete
+            </button>
+          </mat-cell>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef = "displayedColumns"></tr>
+        <tr mat-row *matRowDef = "let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
   </div>
-</div>
+</mat-card>

@@ -2,7 +2,7 @@ import {Company} from "./Company";
 import {Teams} from "./Teams";
 
 export enum UserLevel {
-  ADMIN = 'ADMIN', DEVELOPER = 'DEVELOPER', CUSTOMER = 'CUSTOMER', UNKNOWN = 'UNKNOWN',
+  ADMIN = 'ADMIN', DEVELOPER = 'DEVELOPER', UNKNOWN = 'UNKNOWN',
 }
 
 export class User {
@@ -15,7 +15,6 @@ export class User {
     this.company = company;
     this.teams = teams;
     this.userLevel = userLevel;
-
   }
 
   id: number;

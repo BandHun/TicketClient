@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../../environments/environment";
 import {Document} from "../../../models/Document";
+import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -24,8 +25,8 @@ export class DocumentService {
     return this.http.get<Array<Document>>(environment.apiBaseUrl + "/document/getbyticketid/" + ticketId);
   }
 
-  uploadDocumentToComment(commentId: number, file: any) {
-    return this.http.post<Document>(environment.apiBaseUrl + "/document/tocomment/" + commentId, file);
+  downloadFile(id: number): Observable<Blob> {
+    return this.http.get(environment.apiBaseUrl + "/document/getdata/" + id, {responseType: 'blob'});
   }
 
   deleteDocument(documentId: number) {

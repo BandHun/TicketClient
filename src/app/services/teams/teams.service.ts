@@ -18,7 +18,6 @@ export class TeamsService {
   }
 
   public getsprints(teamId: number) {
-    console.log("AAAAAAAAAA")
     return this.http.get<Array<Sprint>>(environment.apiBaseUrl + "/teams/getsprints/" + teamId);
   }
 

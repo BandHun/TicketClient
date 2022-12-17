@@ -19,6 +19,10 @@ export class HourrecordService {
     return this.http.post<number>(environment.apiBaseUrl + "/hours/getforuser/" + userId, day);
   }
 
+  public getSummRecordsForTicket(ticketId: number) {
+    return this.http.get<number>(environment.apiBaseUrl + "/hours/gethoursforticket/" + ticketId);
+  }
+
   public createHourRecord(ticketId: number, toDate: Date, hours: number) {
     return this.http.post<HourRecords>(environment.apiBaseUrl + "/hours/loghour", {
       ticketId: ticketId, toDate: toDate, hours: hours

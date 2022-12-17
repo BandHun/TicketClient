@@ -3,7 +3,7 @@ import {User} from "./User";
 
 
 export enum RequestStatus {
-  ACCAPTED = 'ACCAPTED', DECLINED = 'DECLINED', UNDER_REVIEW = 'UNDER_REVIEW',
+  DECLINED = 'DECLINED', UNDER_REVIEW = 'UNDER_REVIEW',
 
 }
 

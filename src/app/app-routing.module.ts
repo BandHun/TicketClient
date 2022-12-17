@@ -62,7 +62,8 @@ const routes: Routes = [//COMMON
 
 
   //USERS
-  {path: "profile", component: ProfileComponent}, {path: "users", component: UsersComponent},
+  {path: "profile", component: ProfileComponent},
+  {path: "users", component: UsersComponent},
   {path: "useredit/:id", component: UsereditComponent},
   {path: "profile/:id", component: ProfileComponent},
 

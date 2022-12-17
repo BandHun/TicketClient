@@ -61,16 +61,17 @@ export class TeamsregistrationComponent implements OnInit {
 
   createTable(teamId: number) {
     this.tableService.createTable(teamId).subscribe(table => {
+      this.teamsService.getTeamsByCompany().subscribe(teams => {
+        this.dataSource = new MatTableDataSource<Teams>();
+        teams.forEach(teams => this.dataSource.data.push(teams));
+        this.dataSource._updateChangeSubscription();
+      });
       NotificationsComponent.notification("Table created successfully")
     });
   }
 
   joinTema(teamId: number) {
     this.teamsService.joinTeam(teamId).subscribe(() => NotificationsComponent.notification("Joined team successfully"));
-  }
-
-  hasNotTable(team: Teams) {
-    console.log(team.teamsTable)
   }
 }
 

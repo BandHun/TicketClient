@@ -6,9 +6,9 @@ import {Teams} from "./Teams";
 
 export enum TicketStatus {
   TODO = 'TODO',
-  STARTED_PROGRESS = 'STARTED_PROGRESS',
-  WAITING_FOR_REVIEW = 'WAITING_FOR_REVIEW',
-  WAITING_FOR_TEST = 'WAITING_FOR_TEST',
+  IN_PROGRESS = 'IN_PROGRESS',
+  IN_REVIEW = 'IN_REVIEW',
+  IN_TEST = 'IN_TEST',
   DEMO = 'DEMO',
   DONE = 'DONE',
 }
@@ -30,7 +30,7 @@ export class Ticket {
   documents: Array<Document>;
   comments: Array<Comment>;
   sprint: Sprint;
-  team: Teams;
+  teams: Teams;
 
   constructor(title: string, author: User, assignee: User, project: Project, description: string, storyPoints: number,
               status: TicketStatus, sprint: Sprint) {
