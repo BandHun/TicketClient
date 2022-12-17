@@ -42,18 +42,6 @@ export class CompanyregistrationComponent implements OnInit {
     });
   }
 
-  /*join(companyId: number) {
-    this.user = JSON.parse(localStorage.getItem('currentuser'));
-    if (this.user.company != null) {
-      NotificationsComponent.notification("You already have a company! Leave befor join an otherone!");
-      return;
-    }
-    this.companyService.joinCompany(companyId).subscribe(() => {
-      NotificationsComponent.notification("Joined company successfully");
-      this.router.navigate(['/home']);
-    })
-  }/**/
-
   sendJoinRequest(companyId: number): void {
     this.companyService.sendJoinRequest(companyId).subscribe(res => {
       this.joinRequests.push(res);
@@ -77,7 +65,6 @@ export class CompanyregistrationComponent implements OnInit {
     // @ts-ignore
     this.joinRequests.forEach(request => {
       if (request.company.id == company.id) {
-        console.log(request.requestStatus)
         toret = request.requestStatus
       }
     })

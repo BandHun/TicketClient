@@ -78,7 +78,6 @@ export class TicketregistrationComponent implements OnInit {
   }
 
   teamchanged() {
-    console.log(this.ticket.teams)
     this.ticket.sprint = null;
     if (this.ticket.teams.teamsTable != null) {
       this.sprints = this.ticket.teams.teamsTable.sprints;

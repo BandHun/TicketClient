@@ -41,7 +41,6 @@ export class NavbarComponent implements OnInit {
     if (this.user == null) {
       return true;
     }
-    console.log(this.user.userLevel)
     if (b) {
       if (this.user.userLevel === UserLevel.ADMIN) {
         return true

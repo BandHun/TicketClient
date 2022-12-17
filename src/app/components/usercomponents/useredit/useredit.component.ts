@@ -56,10 +56,6 @@ export class UsereditComponent implements OnInit {
     return this.currentUser.id == this.user.id;
   }
 
-  retTrue() {
-    return true;
-  }
-
   save() {
     this.userService.updateUser(this.editForm.value, this.user.id).subscribe(user => {
       if (this.currentUser.id == this.user.id) {
@@ -69,6 +65,6 @@ export class UsereditComponent implements OnInit {
         this.user = user;
         NotificationsComponent.notification("Update finished")
       }
-    })/**/
+    })
   }
 }

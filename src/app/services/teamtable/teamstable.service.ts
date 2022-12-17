@@ -29,7 +29,6 @@ export class TeamstableService {
   }
 
   public createTable(teamId: number) {
-    console.log("AAA")
     return this.http.post<TeamsTable>(environment.apiBaseUrl + "/tables/createtoteam", teamId);
   }
 }

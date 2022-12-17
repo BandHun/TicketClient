@@ -17,16 +17,12 @@ export class ProfileComponent implements OnInit {
     const id = this.route.snapshot.params['id'];
     if (id === undefined) {
       this.user = JSON.parse(localStorage.getItem('currentuser'))
-      console.log(this.user)
       this.userService.getTeam(this.user.id).subscribe(team => {
-        console.log(team);
         this.user.teams = team;
       });
     } else {
       this.userService.getById(id).subscribe(async user => {
         this.user = user;
-        console.log("MASODIK")
-        console.log(this.user)
         await this.userService.getTeam(this.user.id).subscribe(team => {
           this.user.teams = team;
         });

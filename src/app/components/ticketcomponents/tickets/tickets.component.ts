@@ -17,7 +17,6 @@ export class TicketsComponent implements OnInit {
 
   ngOnInit(): void {
     this.ticketsService.getTicketsByCompany().subscribe(tickets => {
-      console.log(tickets)
       tickets.forEach(ticket => {
         this.dataSource.data.push(ticket);
       });

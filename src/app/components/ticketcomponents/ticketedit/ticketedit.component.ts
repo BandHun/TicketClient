@@ -61,7 +61,6 @@ export class TicketeditComponent implements OnInit {
     this.route.params.subscribe(
       params => this.ticketService.getTicketsById(Number(this.route.snapshot.params['id'])).subscribe(ticket => {
         this.ticketToStor = ticket;
-        console.log(ticket)
         this.isTicketReady();
         if (ticket.teams != null) {
           this.teamService.getsprints(ticket.teams.id).subscribe(sprints => {
@@ -103,22 +102,18 @@ export class TicketeditComponent implements OnInit {
     this.ticketService.save(this.ticket.id, this.ticket).subscribe(ticket => {
       if (this.ticket.teams != null) {
         this.ticketService.addToTeam(this.ticket.id, this.ticket.teams).subscribe(ticket => {
-          console.log("team added")
         })
       }
       if (this.ticket.sprint != null) {
         this.ticketService.addToSprint(this.ticket.id, this.ticket.sprint).subscribe(ticket => {
-          console.log("sprint added")
         })
       }
       if (this.ticket.project != null) {
         this.ticketService.addToProject(this.ticket.project.id, this.ticket.id).subscribe(() => {
-          console.log("project added")
         })
       }
       if (this.ticket.assignee != null) {
         this.ticketService.assigneto(this.ticket.assignee.id, this.ticket.id).subscribe(() => {
-          console.log("assignee added")
         })
       }
       if (this.selectedFiles != undefined) {
@@ -130,26 +125,13 @@ export class TicketeditComponent implements OnInit {
       NotificationsComponent.notification("Ticket updated");
     }, (err) => {
       NotificationsComponent.notification(err);
-    });/**/
+    });
   }
 
   save2() {
     this.documentService.uploadDocumentToTicket(this.ticket.id, this.selectedFiles[0]).subscribe(() => {
     })
   }
-
-  /*save(): void {
-    this.ticketService.save(this.ticket).subscribe(ticket => {
-      this.ticket = ticket;
-      this.documentService.uploadDocumentToTicket(this.ticket.id, this.selectedFiles[0]).subscribe(
-        () => NotificationsComponent.notification("Documentum uploaded succesfully"))
-
-      this.router.navigate(['tickets']);
-      NotificationsComponent.notification("Ticket updated");
-    }, (err) => {
-      NotificationsComponent.notification(err);
-    });
-  }*/
 
   teamchanged(event: any): void {
     this.teamnotnull = true;
@@ -159,7 +141,7 @@ export class TicketeditComponent implements OnInit {
     })
     this.teamService.getsprints(event.id).subscribe(sprints => {
       this.sprints = sprints;
-    });/**/
+    });
   }
 
   selectFile(event: any) {

@@ -34,7 +34,6 @@ export class TicketboardComponent implements OnInit {
     this.teamtableid = this.route.snapshot.params['id'];
     this.teamservice.getUsersByTableId(this.teamtableid).subscribe(users => {
       this.users = users;
-      console.log(users)
     })
     this.tableService.getTeamTableByTeamId(this.teamtableid).subscribe(table => {
       this.teamtable = table;
@@ -55,7 +54,6 @@ export class TicketboardComponent implements OnInit {
             event.currentIndex);
           NotificationsComponent.notification("Status changed successfully")
         }, (err) => {
-          console.log(err)
           NotificationsComponent.notification(err)
         })
     }
@@ -107,32 +105,9 @@ export class TicketboardComponent implements OnInit {
 
   filterTickets(event: any) {
     let filtered = new Array<Ticket>()
-    console.log(this.sprint.tickets)
     this.sprint.tickets.forEach(ticket => {
       if (ticket.assignee == this.filterUser) filtered.push(ticket)
     })
     this.board = this.ticketsToColumns(filtered);
   }
-
-  /*sprintchange(selected: Sprint) {
-    this.dataSource = new MatTableDataSource<Ticket>();
-    this.tableService.getTicketsBySprintId(selected.id).subscribe(tickets => {
-      tickets.forEach(ticket => {
-        this.dataTostore.data.push(ticket)
-        this.dataSource.data.push(ticket);
-        this.dataSource._updateChangeSubscription();
-      })
-    });
-  }
-
-  filter(user: User) {
-    let dataSource = new MatTableDataSource<Ticket>();
-    for (let i = 0; i < this.dataTostore.data.length; i++) {
-      if (this.dataTostore.data[i].assignee.id === user.id) {
-        dataSource.data.push(this.dataTostore.data[i]);
-      }
-    }
-    this.dataSource = dataSource;
-    this.dataSource._updateChangeSubscription();
-  }/**/
 }
