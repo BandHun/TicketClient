@@ -107,7 +107,10 @@ export class TicketboardComponent implements OnInit {
     let filtered = new Array<Ticket>()
     this.sprint.tickets.forEach(ticket => {
       let assignee = ticket.assignee
-      if (assignee != null && assignee.id === user.id) {
+      if (user != null && assignee != null && assignee.id === user.id) {
+        filtered.push(ticket)
+      }
+      if (user == null) {
         filtered.push(ticket)
       }
     })

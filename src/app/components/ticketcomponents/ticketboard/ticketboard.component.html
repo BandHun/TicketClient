@@ -21,9 +21,18 @@
     <div class = "board">
       <br>
       <label>Assignee filters</label>
-      <div *ngFor = "let user of users">
-        <button mat-raised-button color = "primary" style = "margin-bottom:10px; margin-top: 10px"
-                (click) = "filterTickets(user)">{{ user.name }}</button>
+      <div class = "col-md-8" style = "display: flex; flex-direction: row;">
+        <div style = "display: block; margin-left: 50px">
+          <button mat-raised-button color = "primary" style = "margin-bottom:10px; margin-top: 10px"
+                  (click) = "filterTickets(null)">Everybody
+          </button>
+        </div>
+        <div *ngFor = "let user of users">
+          <div style = "display: block; margin-left: 50px">
+            <button mat-raised-button color = "primary" style = "margin-bottom:10px; margin-top: 10px"
+                    (click) = "filterTickets(user)">{{ user.name }}</button>
+          </div>
+        </div>
       </div>
       <br>
       <div class = "board-wrapper">

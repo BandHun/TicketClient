@@ -7,13 +7,13 @@ export class MenuList {
 
 //@formatter:off
 export const menuList = [
-  new MenuList('Home', 'home', 'Home page', 'storage', false,null),
-  new MenuList('Createticket', 'createticket', '', 'add', false,null),
-  new MenuList('Users', 'users', '', 'flash_on', false,null),
+  new MenuList('Home', 'home', 'Home page', 'home icon', false,null),
+  new MenuList('Users', 'users', '', 'account_circle', false,null),
   new MenuList('Teams', 'teams', '', 'flash_on', true,null),
-  new MenuList('Hours', 'hours', '', 'flash_on', false,null),
-  new MenuList('Team Tables', 'teamtables', '', 'flash_on', false,null),
+  new MenuList('Hours', 'hours', '', 'hourglass_empty_icon', false,null),
+  new MenuList('Team Tables', 'teamtables', '', 'dashboard icon', false,null),
   new MenuList('Projects', 'projects', '', 'poll', true,null),
   new MenuList('Tickets','tickets', '', 'calendar_today', false,null),
+  new MenuList('Createticket', 'createticket', '', 'add', false,null),
 ];
 /* beautify preserve:end */

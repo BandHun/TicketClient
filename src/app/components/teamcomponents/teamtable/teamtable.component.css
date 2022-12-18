@@ -1,13 +1,17 @@
 .mat-column-title {
-  width: 20%;
+  width: 15%;
 }
 
 .mat-column-assignee {
-  width: 20%;
+  width: 15%;
+}
+
+.mat-column-project {
+  width: 15%;
 }
 
 .mat-column-status {
-  width: 20%;
+  width: 15%;
 }
 
 .mat-column-actions {

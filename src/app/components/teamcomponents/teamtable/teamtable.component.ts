@@ -15,7 +15,7 @@ import {TeamsService} from "../../../services/teams/teams.service";
 })
 export class TeamtableComponent implements OnInit {
 
-  displayedColumns: string[] = ['title', 'assignee', 'status', 'actions'];
+  displayedColumns: string[] = ['title', 'project', 'assignee', 'status', 'actions'];
   dataSource = new MatTableDataSource<Ticket>();
   dataTostore = new MatTableDataSource<Ticket>();
   teamtableid: number;
@@ -54,10 +54,18 @@ export class TeamtableComponent implements OnInit {
 
   filter(user: User) {
     let dataSource = new MatTableDataSource<Ticket>();
-    for (let i = 0; i < this.dataTostore.data.length; i++) {
-      let assignee = this.dataTostore.data[i].assignee
-      if (assignee != null && assignee.id === user.id) {
+    if (user == null) {
+      for (let i = 0; i < this.dataTostore.data.length; i++) {
+
         dataSource.data.push(this.dataTostore.data[i]);
+
+      }
+    } else {
+      for (let i = 0; i < this.dataTostore.data.length; i++) {
+        let assignee = this.dataTostore.data[i].assignee
+        if (assignee != null && assignee.id === user.id) {
+          dataSource.data.push(this.dataTostore.data[i]);
+        }
       }
     }
     this.dataSource = dataSource;
